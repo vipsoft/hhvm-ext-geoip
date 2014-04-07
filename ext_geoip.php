@@ -49,31 +49,31 @@
  *
  * @param int $database Database type
  *
- * @return string Returns the database version on success.
- *                Returns NULL on error.                
+ * @return mixed Returns the database version on success.
+ *               Returns NULL on error.                
  */
-<<__Native>> function geoip_database_info (int $database = GEOIP_COUNTRY_EDITION): ?string;
+<<__Native>> function geoip_database_info (int $database = GEOIP_COUNTRY_EDITION): mixed;
 
 /**
  * geoip_db_avail() - Determine if GeoIP Database is available
  *
  * @param int $database Database type
  *
- * @return bool Returns TRUE if the database is available.
- *              Returns FALSE if the database is not available.
- *              Returns NULL on error.
+ * @return mixed Returns TRUE if the database is available.
+ *               Returns FALSE if the database is not available.
+ *               Returns NULL on error.
  */
-<<__Native>> function geoip_db_avail (int $database): ?bool;
+<<__Native>> function geoip_db_avail (int $database): mixed;
 
 /**
  * geoip_db_filename() - Returns the filename of the corresponding GeoIP Database
  *
  * @param int $database Database type
  *
- * @return string Returns the database filename on success.
- *                Returns NULL on error.
+ * @return mixed Returns the database filename on success.
+ *               Returns NULL on error.
  */
-<<__Native>> function geoip_db_filename (int $database): ?string;
+<<__Native>> function geoip_db_filename (int $database): mixed;
 
 /**
  * geoip_db_get_all_info() - Returns detailed information about all GeoIP database types
@@ -90,11 +90,11 @@
  *
  * @param string $hostname
  *
- * @return int Returns one of GEOIP_UNKNOWN_SPEED, GEOIP_DIALUP_SPEED,
- *             GEOIP_CABLEDSL_SPEED, or GEOIP_CORPORATE_SPEED on success.
- *             Returns NULL on error.
+ * @return mixed Returns one of GEOIP_UNKNOWN_SPEED, GEOIP_DIALUP_SPEED,
+ *               GEOIP_CABLEDSL_SPEED, or GEOIP_CORPORATE_SPEED on success.
+ *               Returns NULL on error.
  */
-<<__Native>> function geoip_id_by_name (string $hostname): ?int;
+<<__Native>> function geoip_id_by_name (string $hostname): mixed;
 
 /**
  * geoip_isp_by_name() - Get the Internet Service Provider (ISP) name
