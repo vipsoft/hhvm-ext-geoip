@@ -24,7 +24,7 @@
    +----------------------------------------------------------------------+
  */
 
-/* $Id: cd6038e9b14b72e20e3f20b841620e997f0b2d55 $ */
+/* $Id: f4e1599c53d86d002b798f19b514e9c12fa2a3a9 $ */
 
 /* Sanity check to ensure that pcre extension needed by this script is available.
  * In the event it is not, print a nice error message indicating that this script will
@@ -427,8 +427,7 @@ function save_or_mail_results()
 			}
 
 			$failed_tests_data .= $sep . "PHPINFO" . $sep;
-			//$failed_tests_data .= shell_exec($php . ' -ddisplay_errors=stderr -dhtml_errors=0 -i 2> /dev/null');
-			$failed_tests_data .= shell_exec($php . ' -i 2> /dev/null');
+			$failed_tests_data .= shell_exec($php . ' -d display_errors=stderr -d html_errors=0 -i 2> /dev/null');
 
 			if ($just_save_results || !mail_qa_team($failed_tests_data, $compression, $status) && !TRAVIS_CI) {
 				file_put_contents($output_file, $failed_tests_data);
@@ -582,7 +581,7 @@ if (isset($argc) && $argc > 1) {
 					if (!$valgrind_header) {
 						error("Valgrind returned no version info, cannot proceed.\nPlease check if Valgrind is installed.");
 					} else {
-						$valgrind_version = preg_replace("/valgrind-([0-9])\.([0-9])\.([0-9]+)([.-\w]+)?(\s+)/", '$1$2$3', $valgrind_header, 1, $replace_count);
+						$valgrind_version = preg_replace("/valgrind-(\d)\.(\d)\.(\d+)([.\w_-]+)?(\s+)/", '$1$2$3', $valgrind_header, 1, $replace_count);
 						if ($replace_count != 1 || !is_numeric($valgrind_version)) {
 							error("Valgrind returned invalid version info (\"$valgrind_header\"), cannot proceed.");
 						}
@@ -663,7 +662,7 @@ if (isset($argc) && $argc > 1) {
 					$html_output = is_resource($html_file);
 					break;
 				case '--version':
-					echo '$Id: cd6038e9b14b72e20e3f20b841620e997f0b2d55 $' . "\n";
+					echo '$Id: f4e1599c53d86d002b798f19b514e9c12fa2a3a9 $' . "\n";
 					exit(1);
 
 				default:
@@ -1511,8 +1510,7 @@ TEST $file
 
 			junit_start_timer($shortname);
 
-			//$output = system_with_timeout("$extra $php $pass_options -q $ini_settings -d display_errors=0 \"$test_skipif\"", $env);
-			$output = system_with_timeout("$extra $php $pass_options -q $ini_settings \"$test_skipif\"", $env);
+			$output = system_with_timeout("$extra $php $pass_options -q $ini_settings -d display_errors=0 \"$test_skipif\"", $env);
 
 			junit_finish_timer($shortname);
 
@@ -2304,7 +2302,7 @@ function settings2params(&$ini_settings)
 		if (is_array($value)) {
 			foreach($value as $val) {
 				$val = addslashes($val);
-				//$settings .= " -d \"$name=$val\"";
+				$settings .= " -d \"$name=$val\"";
 			}
 		} else {
 			if (substr(PHP_OS, 0, 3) == "WIN" && !empty($value) && $value{0} == '"') {
@@ -2318,7 +2316,7 @@ function settings2params(&$ini_settings)
 				$value = addslashes($value);
 			}
 
-			//$settings .= " -d \"$name=$value\"";
+			$settings .= " -d \"$name=$value\"";
 		}
 	}
 
