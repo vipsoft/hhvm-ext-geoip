@@ -7,3 +7,5 @@ HHVM_EXTENSION(geoip ext_geoip.cpp)
 HHVM_SYSTEMLIB(geoip ext_geoip.php)
 
 target_link_libraries(geoip ${LIBGEOIP_LIBRARIES})
+
+include(./CMake/GeoIP.cmake)
