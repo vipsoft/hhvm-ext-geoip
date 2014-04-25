@@ -3,6 +3,7 @@
 ## Version 1.0.9-dev
 
 * geoip.custom_directory can now be set via ini_set; fixes https://bugs.php.net/bug.php?id=61607
+* increase test coverage
 
 ## Version 1.0.8
 
