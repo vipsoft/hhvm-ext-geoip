@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [[ "$HPHP_HOME" == "" ]]; then
     echo HPHP_HOME environment variable must be set!
