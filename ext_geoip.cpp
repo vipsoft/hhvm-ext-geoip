@@ -459,7 +459,11 @@ class geoipExtension: public Extension {
                 "geoip.custom_directory",
                 "",
                 IniSetting::SetAndGet<std::string>(
+#if LIBGEOIP_VERSION >= 1004001
+                    updateCustomDirectory,
+#else
                     nullptr,
+#endif
                     nullptr
                 ),
                 &s_geoip_globals->custom_directory
@@ -511,6 +515,20 @@ class geoipExtension: public Extension {
 
             _GeoIP_setup_dbfilename();
         }
+
+#if LIBGEOIP_VERSION >= 1004001
+    private:
+        static bool updateCustomDirectory(const std::string& value) {
+            s_geoip_globals->custom_directory = value.data();;
+            char *custom_directory = (char *) s_geoip_globals->custom_directory.c_str();
+
+            GeoIP_cleanup();
+            GeoIP_setup_custom_directory(*custom_directory ? custom_directory : NULL);
+            _GeoIP_setup_dbfilename();
+
+            return true;
+        }
+#endif
 } s_geoip_extension;
 
 HHVM_GET_MODULE(geoip);
