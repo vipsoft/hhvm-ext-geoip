@@ -1,18 +1,23 @@
 --TEST--
 Checking geoip_org_code_by_name
 --SKIPIF--
-<?php if (!extension_loaded("geoip") || !geoip_db_avail(GEOIP_ORG_EDITION)) print "skip"; ?>
+<?php
+ini_set('geoip.custom_directory', __DIR__ . '/data');
+
+if (!extension_loaded("geoip") || !geoip_db_avail(GEOIP_ORG_EDITION)) print "skip";
+?>
 --POST--
 --GET--
 --FILE--
 <?php
 
+ini_set('geoip.custom_directory', __DIR__ . '/data');
+
 var_dump(geoip_org_by_name(null));
 var_dump(geoip_org_by_name(''));
 var_dump(geoip_org_by_name('127.0.0.1'));
 var_dump(geoip_org_by_name('localhost'));
-var_dump(geoip_org_by_name('128.100.132.238'));
-var_dump(geoip_org_by_name('www.utoronto.ca'));
+var_dump(geoip_org_by_name('12.87.118.0'));
 
 ?>
 --EXPECTF--
@@ -27,5 +32,4 @@ bool(false)
 
 Notice: geoip_org_by_name(): Host %s not found in %s
 bool(false)
-string(2) "??"
-string(2) "??"
+string(22) "AT&T Worldnet Services"
