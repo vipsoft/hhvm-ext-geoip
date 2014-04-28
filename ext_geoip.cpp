@@ -489,7 +489,22 @@ static Variant HHVM_FUNCTION(geoip_setup_custom_directory, const String& directo
     // UNTESTED
     char *custom_directory = (char *) directory.c_str();
 
+#if LIBGEOIP_VERSION >= 100407
     GeoIP_cleanup();
+#else
+    if (GeoIPDBFileName != NULL) {
+        int i;
+
+        for (i = 0; i < NUM_DB_TYPES; i++) {
+            if (GeoIPDBFileName[i]) {
+                free(GeoIPDBFileName[i]);
+            }
+        }
+
+        free(GeoIPDBFileName);
+        GeoIPDBFileName = NULL;
+    }
+#endif
     GeoIP_setup_custom_directory(*custom_directory ? custom_directory : NULL);
     _GeoIP_setup_dbfilename();
 
@@ -619,7 +634,22 @@ class geoipExtension: public Extension {
             s_geoip_globals->custom_directory = value.data();
             char *custom_directory = (char *) s_geoip_globals->custom_directory.c_str();
 
+#if LIBGEOIP_VERSION >= 100407
             GeoIP_cleanup();
+#else
+            if (GeoIPDBFileName != NULL) {
+                int i;
+
+                for (i = 0; i < NUM_DB_TYPES; i++) {
+                    if (GeoIPDBFileName[i]) {
+                        free(GeoIPDBFileName[i]);
+                    }
+                }
+
+                free(GeoIPDBFileName);
+                GeoIPDBFileName = NULL;
+            }
+#endif
             GeoIP_setup_custom_directory(*custom_directory ? custom_directory : NULL);
             _GeoIP_setup_dbfilename();
 
