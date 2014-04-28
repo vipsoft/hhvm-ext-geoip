@@ -489,7 +489,7 @@ static Variant HHVM_FUNCTION(geoip_setup_custom_directory, const String& directo
     // UNTESTED
     char *custom_directory = (char *) directory.c_str();
 
-#if LIBGEOIP_VERSION >= 100407
+#if LIBGEOIP_VERSION >= 1004007
     GeoIP_cleanup();
 #else
     if (GeoIPDBFileName != NULL) {
@@ -634,7 +634,7 @@ class geoipExtension: public Extension {
             s_geoip_globals->custom_directory = value.data();
             char *custom_directory = (char *) s_geoip_globals->custom_directory.c_str();
 
-#if LIBGEOIP_VERSION >= 100407
+#if LIBGEOIP_VERSION >= 1004007
             GeoIP_cleanup();
 #else
             if (GeoIPDBFileName != NULL) {
