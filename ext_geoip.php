@@ -1,6 +1,17 @@
 <?hh
 
 /**
+ * geoip_asnum_by_name() - Returns the Autonomous System Number found in the GeoIP Database.
+ *
+ * @param string $hostname
+ *
+ * @return mixed Returns the ASN on success.
+ *               Returns FALSE if the address cannot be found in the database.
+ *               Returns NULL on error.
+ */
+<<__Native>> function geoip_asnum_by_name(string $hostname): mixed;
+
+/**
  * geoip_continent_code_by_name() - Get the two letter continent code
  *
  * @param string $hostname
@@ -9,7 +20,7 @@
  *               Returns FALSE if the address cannot be found in the database.
  *               Returns NULL on error.
  */
-<<__Native>> function geoip_continent_code_by_name (string $hostname): mixed;
+<<__Native>> function geoip_continent_code_by_name(string $hostname): mixed;
 
 /**
  * geoip_country_code_by_name() - Get the two letter country code
@@ -20,7 +31,7 @@
  *               Returns FALSE if the address cannot be found in the database.
  *               Returns NULL on error.
  */
-<<__Native>> function geoip_country_code_by_name (string $hostname): mixed;
+<<__Native>> function geoip_country_code_by_name(string $hostname): mixed;
 
 /**
  * geoip_country_code3_by_name() - Get the three letter country code
@@ -31,7 +42,7 @@
  *               Returns FALSE if the address cannot be found in the database.
  *               Returns NULL on error.
  */
-<<__Native>> function geoip_country_code3_by_name (string $hostname): mixed;
+<<__Native>> function geoip_country_code3_by_name(string $hostname): mixed;
 
 /**
  * geoip_country_name_by_name() - Get the full country name
@@ -42,7 +53,7 @@
  *               Returns FALSE if the address cannot be found in the database.
  *               Returns NULL on error.
  */
-<<__Native>> function geoip_country_name_by_name (string $hostname): mixed;
+<<__Native>> function geoip_country_name_by_name(string $hostname): mixed;
 
 /**
  * geoip_database_info() - Get GeoIP Database information
@@ -52,7 +63,7 @@
  * @return mixed Returns the database version on success.
  *               Returns NULL on error.                
  */
-<<__Native>> function geoip_database_info (int $database = GEOIP_COUNTRY_EDITION): mixed;
+<<__Native>> function geoip_database_info(int $database = GEOIP_COUNTRY_EDITION): mixed;
 
 /**
  * geoip_db_avail() - Determine if GeoIP Database is available
@@ -63,7 +74,7 @@
  *               Returns FALSE if the database is not available.
  *               Returns NULL on error.
  */
-<<__Native>> function geoip_db_avail (int $database): mixed;
+<<__Native>> function geoip_db_avail(int $database): mixed;
 
 /**
  * geoip_db_filename() - Returns the filename of the corresponding GeoIP Database
@@ -73,7 +84,7 @@
  * @return mixed Returns the database filename on success.
  *               Returns NULL on error.
  */
-<<__Native>> function geoip_db_filename (int $database): mixed;
+<<__Native>> function geoip_db_filename(int $database): mixed;
 
 /**
  * geoip_db_get_all_info() - Returns detailed information about all GeoIP database types
@@ -83,7 +94,18 @@
  *               "description" - database description
  *               "filename" - database filename
  */
-<<__Native>> function geoip_db_get_all_info (): array;
+<<__Native>> function geoip_db_get_all_info(): array;
+
+/**
+ * geoip_domain_by_name() - Returns the Domain Name found in the GeoIP Database
+ *
+ * @param string $hostname
+ *
+ * @return mixed Returns the domain name on success.
+ *               Returns FALSE if the address cannot be found in the database.
+ *               Returns NULL on error.
+ */
+<<__Native>> function geoip_domain_by_name(string $hostname): mixed;
 
 /**
  * geoip_id_by_name() - Get the Internet connection type
@@ -94,7 +116,7 @@
  *               GEOIP_CABLEDSL_SPEED, or GEOIP_CORPORATE_SPEED on success.
  *               Returns NULL on error.
  */
-<<__Native>> function geoip_id_by_name (string $hostname): mixed;
+<<__Native>> function geoip_id_by_name(string $hostname): mixed;
 
 /**
  * geoip_isp_by_name() - Get the Internet Service Provider (ISP) name
@@ -105,7 +127,19 @@
  *               Returns FALSE if the address cannot be found in the database.
  *               Returns NULL on error.
  */
-<<__Native>> function geoip_isp_by_name (string $hostname): mixed;
+<<__Native>> function geoip_isp_by_name(string $hostname): mixed;
+
+/**
+ * geoip_netspeedcell_by_name() - Get the estimated connection speed
+ *
+ * @param string $hostname
+ *
+ * @return mixed Returns the connection speed as a string on success, i.e.,
+ *               one of: "Cable/DSL", "Cellular", "Corporate", or "Dialup".
+ *               Returns FALSE if the address cannot be found in the database.
+ *               Returns NULL on error.
+ */
+<<__Native>> function geoip_netspeedcell_by_name(string $hostname): mixed;
 
 /**
  * geoip_org_by_name() - Get the organization name
@@ -116,7 +150,7 @@
  *               Returns FALSE if the address cannot be found in the database.
  *               Returns NULL on error.
  */
-<<__Native>> function geoip_org_by_name (string $hostname): mixed;
+<<__Native>> function geoip_org_by_name(string $hostname): mixed;
 
 /**
  * geoip_record_by_name() - Returns the detailed City information found in the GeoIP City Database
@@ -138,7 +172,7 @@
  *               Returns FALSE if host not found.
  *               Returns NULL on error.
  */
-<<__Native>> function geoip_record_by_name (string $hostname): mixed;
+<<__Native>> function geoip_record_by_name(string $hostname): mixed;
 
 /**
  * geoip_region_by_name() - Get the country code and region
@@ -151,7 +185,7 @@
  *               Returns FALSE if host not found.
  *               Returns NULL on error.
  */
-<<__Native>> function geoip_region_by_name (string $hostname): mixed;
+<<__Native>> function geoip_region_by_name(string $hostname): mixed;
 
 /**
  * geoip_region_name_by_code() - Returns the region name for some country and region code combo
@@ -163,7 +197,16 @@
  *               Returns FALSE if country and region code combo not found.
  *               Returns NULL on error.
  */
-<<__Native>> function geoip_region_name_by_code (string $country_code, string $region_code): mixed;
+<<__Native>> function geoip_region_name_by_code(string $country_code, string $region_code): mixed;
+
+/**
+ * geoip_setup_custom_directory() - Sets the custom directory for GeoIP databases
+ *
+ * @param string $directory
+ *
+ * @return void
+ */
+<<__Native>> function geoip_setup_custom_directory(string $directory): mixed;
 
 /**
  * geoip_time_zone_by_country_and_region() - Returns the time zone for some country and region code combo
@@ -175,4 +218,4 @@
  *               Returns FALSE if country and region code combo not found.
  *               Returns NULL on error.
  */
-<<__Native>> function geoip_time_zone_by_country_and_region (string $country_code, ?string $region_code = NULL): mixed;
+<<__Native>> function geoip_time_zone_by_country_and_region(string $country_code, ?string $region_code = NULL): mixed;

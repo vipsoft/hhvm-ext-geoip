@@ -21,10 +21,7 @@ var_dump(geoip_region_by_name('64.17.254.223'));
 
 ?>
 --EXPECTF--
-Notice: geoip_region_by_name(): Host  not found in %s
 bool(false)
-
-Notice: geoip_region_by_name(): Host  not found in %s
 bool(false)
 array(2) {
   ["country_code"]=>

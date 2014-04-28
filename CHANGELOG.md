@@ -2,9 +2,13 @@
 
 ## Version 1.0.9-dev
 
-* geoip.custom_directory can now be set via ini_set; fixes https://bugs.php.net/bug.php?id=61607
-* update tests/014.phpt to reflect change in libGeoIP 1.4.5+ where GeoIP_time_zone_by_country_and_region() requires a region when country='CA'; fixes https://bugs.php.net/bug.php?id=61834
-* increase test coverage
+* Fix [geoip.custom_directory gets ignored when set via ini_set](https://bugs.php.net/bug.php?id=61607)
+* Fix [tests/014.phpt does not work for GeoIP library version 1.4.5 or later](https://bugs.php.net/bug.php?id=61834)
+* Increase test coverage and test data
+* Sync with 1.0.9-dev of pecl extension
+  - Remove notice for "Host %s not found"
+  - Add geoip_asnum_by_name(), geoip_domain_by_name(), geoip_setup_custom_directory()
+* Fix [Add support for ASNum, Domain and NetSpeedCell databases.](https://bugs.php.net/bug.php?id=67121)
 
 ## Version 1.0.8
 

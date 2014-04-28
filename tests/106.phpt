@@ -1,5 +1,5 @@
 --TEST--
-Checking geoip_org_code_by_name
+Checking geoip_org_by_name
 --SKIPIF--
 <?php
 ini_set('geoip.custom_directory', __DIR__ . '/data');
@@ -21,15 +21,8 @@ var_dump(geoip_org_by_name('12.87.118.0'));
 
 ?>
 --EXPECTF--
-Notice: geoip_org_by_name(): Host  not found in %s
 bool(false)
-
-Notice: geoip_org_by_name(): Host  not found in %s
 bool(false)
-
-Notice: geoip_org_by_name(): Host %s not found in %s
 bool(false)
-
-Notice: geoip_org_by_name(): Host %s not found in %s
 bool(false)
 string(22) "AT&T Worldnet Services"

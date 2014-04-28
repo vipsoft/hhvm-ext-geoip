@@ -16,16 +16,9 @@ var_dump(geoip_country_code3_by_name('www.utoronto.ca'));
 
 ?>
 --EXPECTF--
-Notice: geoip_country_code3_by_name(): Host  not found in %s
 bool(false)
-
-Notice: geoip_country_code3_by_name(): Host  not found in %s
 bool(false)
-
-Notice: geoip_country_code3_by_name(): Host %s not found in %s
 bool(false)
-
-Notice: geoip_country_code3_by_name(): Host %s not found in %s
 bool(false)
 string(3) "CAN"
 string(3) "CAN"

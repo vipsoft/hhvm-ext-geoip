@@ -26,6 +26,7 @@
 
 namespace HPHP {
 
+// Database types recognized by geoip_database_info() geoip_db_avail(), and geoip_db_filename()
 const int64_t k_GEOIP_COUNTRY_EDITION = GEOIP_COUNTRY_EDITION;
 const StaticString s_GEOIP_COUNTRY_EDITION("GEOIP_COUNTRY_EDITION");
 const int64_t k_GEOIP_REGION_EDITION_REV0 = GEOIP_REGION_EDITION_REV0;
@@ -46,8 +47,12 @@ const int64_t k_GEOIP_ASNUM_EDITION = GEOIP_ASNUM_EDITION;
 const StaticString s_GEOIP_ASNUM_EDITION("GEOIP_ASNUM_EDITION");
 const int64_t k_GEOIP_NETSPEED_EDITION = GEOIP_NETSPEED_EDITION;
 const StaticString s_GEOIP_NETSPEED_EDITION("GEOIP_NETSPEED_EDITION");
+const int64_t k_GEOIP_NETSPEED_EDITION_REV1 = GEOIP_NETSPEED_EDITION_REV1;
+const StaticString s_GEOIP_NETSPEED_EDITION_REV1("GEOIP_NETSPEED_EDITION_REV1");
 const int64_t k_GEOIP_DOMAIN_EDITION = GEOIP_DOMAIN_EDITION;
 const StaticString s_GEOIP_DOMAIN_EDITION("GEOIP_DOMAIN_EDITION");
+
+// Internet connection speed constants returned by geoip_id_by_name()
 const int64_t k_GEOIP_UNKNOWN_SPEED = GEOIP_UNKNOWN_SPEED;
 const StaticString s_GEOIP_UNKNOWN_SPEED("GEOIP_UNKNOWN_SPEED");
 const int64_t k_GEOIP_DIALUP_SPEED = GEOIP_DIALUP_SPEED;
@@ -56,6 +61,33 @@ const int64_t k_GEOIP_CABLEDSL_SPEED = GEOIP_CABLEDSL_SPEED;
 const StaticString s_GEOIP_CABLEDSL_SPEED("GEOIP_CABLEDSL_SPEED");
 const int64_t k_GEOIP_CORPORATE_SPEED = GEOIP_CORPORATE_SPEED;
 const StaticString s_GEOIP_CORPORATE_SPEED("GEOIP_CORPORATE_SPEED");
+
+static Variant HHVM_FUNCTION(geoip_asnum_by_name, const String& hostname) {
+    GeoIP *gi;
+    char *asnum;
+
+    if (GeoIP_db_avail(GEOIP_ASNUM_EDITION)) {
+        gi = GeoIP_open_type(GEOIP_ASNUM_EDITION, GEOIP_STANDARD);
+    } else {
+        raise_warning("geoip_asnum_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_ASNUM_EDITION]);
+
+        return null_variant;
+    }
+
+    asnum = GeoIP_name_by_name(gi, hostname.c_str());
+
+    GeoIP_delete(gi);
+
+    if (asnum == NULL) {
+        return Variant(false);
+    }
+
+    Variant value = Variant(String(asnum));
+
+    free(asnum);
+
+    return value;
+}
 
 static Variant HHVM_FUNCTION(geoip_continent_code_by_name, const String& hostname) {
     GeoIP *gi;
@@ -71,8 +103,6 @@ static Variant HHVM_FUNCTION(geoip_continent_code_by_name, const String& hostnam
     GeoIP_delete(gi);
 
     if (id == 0) {
-        raise_notice("geoip_continent_code_by_name(): Host %s not found", hostname.c_str());
-
         return Variant(false);
     }
 
@@ -93,8 +123,6 @@ static Variant HHVM_FUNCTION(geoip_country_code_by_name, const String& hostname)
     GeoIP_delete(gi);
 
     if (country_code == NULL) {
-        raise_notice("geoip_country_code_by_name(): Host %s not found", hostname.c_str());
-
         return Variant(false);
     }
 
@@ -115,8 +143,6 @@ static Variant HHVM_FUNCTION(geoip_country_code3_by_name, const String& hostname
     GeoIP_delete(gi);
 
     if (country_code3 == NULL) {
-        raise_notice("geoip_country_code3_by_name(): Host %s not found", hostname.c_str());
-
         return Variant(false);
     }
 
@@ -137,8 +163,6 @@ static Variant HHVM_FUNCTION(geoip_country_name_by_name, const String& hostname)
     GeoIP_delete(gi);
 
     if (country_name == NULL) {
-        raise_notice("geoip_country_name_by_name(): Host %s not found", hostname.c_str());
-
         return Variant(false);
     }
 
@@ -169,7 +193,11 @@ static Variant HHVM_FUNCTION(geoip_database_info, int64_t database /* = GEOIP_CO
     db_info = GeoIP_database_info(gi);
     GeoIP_delete(gi);
 
-    return Variant(String(db_info));
+    Variant value = Variant(String(db_info));
+
+    free(db_info);
+
+    return value;
 }
 
 static Variant HHVM_FUNCTION(geoip_db_avail, int64_t database) {
@@ -221,6 +249,33 @@ static Array HHVM_FUNCTION(geoip_db_get_all_info) {
     return info;
 }
 
+static Variant HHVM_FUNCTION(geoip_domain_by_name, const String& hostname) {
+    GeoIP *gi;
+    char *domain;
+
+    if (GeoIP_db_avail(GEOIP_DOMAIN_EDITION)) {
+        gi = GeoIP_open_type(GEOIP_DOMAIN_EDITION, GEOIP_STANDARD);
+    } else {
+        raise_warning("geoip_domain_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_DOMAIN_EDITION]);
+
+        return null_variant;
+    }
+
+    domain = GeoIP_name_by_name(gi, hostname.c_str());
+
+    GeoIP_delete(gi);
+
+    if (domain == NULL) {
+        return Variant(false);
+    }
+
+    Variant value = Variant(String(domain));
+
+    free(domain);
+
+    return value;
+}
+
 static Variant HHVM_FUNCTION(geoip_id_by_name, const String& hostname) {
     GeoIP *gi;
     int netspeed;
@@ -257,8 +312,6 @@ static Variant HHVM_FUNCTION(geoip_isp_by_name, const String& hostname) {
     GeoIP_delete(gi);
 
     if (isp == NULL) {
-        raise_notice("geoip_isp_by_name(): Host %s not found", hostname.c_str());
-
         return Variant(false);
     }
 
@@ -268,6 +321,35 @@ static Variant HHVM_FUNCTION(geoip_isp_by_name, const String& hostname) {
 
     return value;
 }
+
+#if LIBGEOIP_VERSION >= 1004008
+static Variant HHVM_FUNCTION(geoip_netspeedcell_by_name, const String& hostname) {
+    GeoIP *gi;
+    char *netspeedcell;
+
+    if (GeoIP_db_avail(GEOIP_NETSPEED_EDITION_REV1)) {
+        gi = GeoIP_open_type(GEOIP_NETSPEED_EDITION_REV1, GEOIP_STANDARD);
+    } else {
+        raise_warning("geoip_netspeedcell_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1]);
+
+        return null_variant;
+    }
+
+    netspeedcell = GeoIP_name_by_name(gi, hostname.c_str());
+
+    GeoIP_delete(gi);
+
+    if (netspeedcell == NULL) {
+        return Variant(false);
+    }
+
+    Variant value = Variant(String(netspeedcell));
+
+    free(netspeedcell);
+
+    return value;
+}
+#endif
 
 static Variant HHVM_FUNCTION(geoip_org_by_name, const String& hostname) {
     GeoIP *gi;
@@ -281,13 +363,11 @@ static Variant HHVM_FUNCTION(geoip_org_by_name, const String& hostname) {
         return null_variant;
     }
 
-    org = GeoIP_org_by_name(gi, hostname.c_str());
+    org = GeoIP_name_by_name(gi, hostname.c_str());
 
     GeoIP_delete(gi);
 
     if (org == NULL) {
-        raise_notice("geoip_org_by_name(): Host %s not found", hostname.c_str());
-
         return Variant(false);
     }
 
@@ -317,10 +397,8 @@ static Variant HHVM_FUNCTION(geoip_record_by_name, const String& hostname) {
     gi_record = GeoIP_record_by_name(gi, hostname.c_str());
 
     GeoIP_delete(gi);
-    
-    if (NULL == gi_record) {
-        raise_notice("geoip_record_by_name(): Host %s not found", hostname.c_str());
 
+    if (NULL == gi_record) {
         return Variant(false);
     }
 
@@ -370,8 +448,6 @@ static Variant HHVM_FUNCTION(geoip_region_by_name, const String& hostname) {
     GeoIP_delete(gi);
 
     if (NULL == gi_region) {
-        raise_notice("geoip_region_by_name(): Host %s not found", hostname.c_str());
-
         return Variant(false);
     }
 
@@ -385,8 +461,8 @@ static Variant HHVM_FUNCTION(geoip_region_by_name, const String& hostname) {
     return Variant(region);
 }
 
-static Variant HHVM_FUNCTION(geoip_region_name_by_code, const String& country_code, const String& region_code) {
 #if LIBGEOIP_VERSION >= 1004001
+static Variant HHVM_FUNCTION(geoip_region_name_by_code, const String& country_code, const String& region_code) {
     const char *region_name;
 
     if ( ! country_code.length() || ! region_code.length()) {
@@ -402,13 +478,24 @@ static Variant HHVM_FUNCTION(geoip_region_name_by_code, const String& country_co
     }
 
     return Variant(String(region_name));
-#else
-    return null_variant;
-#endif
 }
+#endif
 
-static Variant HHVM_FUNCTION(geoip_time_zone_by_country_and_region, const String& country_code, const Variant& region_code) {
 #if LIBGEOIP_VERSION >= 1004001
+static Variant HHVM_FUNCTION(geoip_setup_custom_directory, const String& directory) {
+    // UNTESTED
+    char *custom_directory = (char *) directory.c_str();
+
+    GeoIP_cleanup();
+    GeoIP_setup_custom_directory(*custom_directory ? custom_directory : NULL);
+    _GeoIP_setup_dbfilename();
+
+    return null_variant;
+}
+#endif
+
+#if LIBGEOIP_VERSION >= 1004001
+static Variant HHVM_FUNCTION(geoip_time_zone_by_country_and_region, const String& country_code, const Variant& region_code) {
     const char *timezone;
     const char *region;
 
@@ -435,10 +522,8 @@ static Variant HHVM_FUNCTION(geoip_time_zone_by_country_and_region, const String
     }
 
     return Variant(String(timezone));
-#else
-    return null_variant;
-#endif
 }
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -481,12 +566,14 @@ class geoipExtension: public Extension {
             Native::registerConstant<KindOfInt64>(s_GEOIP_PROXY_EDITION.get(), k_GEOIP_PROXY_EDITION);
             Native::registerConstant<KindOfInt64>(s_GEOIP_ASNUM_EDITION.get(), k_GEOIP_ASNUM_EDITION);
             Native::registerConstant<KindOfInt64>(s_GEOIP_NETSPEED_EDITION.get(), k_GEOIP_NETSPEED_EDITION);
+            Native::registerConstant<KindOfInt64>(s_GEOIP_NETSPEED_EDITION_REV1.get(), k_GEOIP_NETSPEED_EDITION_REV1);
             Native::registerConstant<KindOfInt64>(s_GEOIP_DOMAIN_EDITION.get(), k_GEOIP_DOMAIN_EDITION);
             Native::registerConstant<KindOfInt64>(s_GEOIP_UNKNOWN_SPEED.get(), k_GEOIP_UNKNOWN_SPEED);
             Native::registerConstant<KindOfInt64>(s_GEOIP_DIALUP_SPEED.get(), k_GEOIP_DIALUP_SPEED);
             Native::registerConstant<KindOfInt64>(s_GEOIP_CABLEDSL_SPEED.get(), k_GEOIP_CABLEDSL_SPEED);
             Native::registerConstant<KindOfInt64>(s_GEOIP_CORPORATE_SPEED.get(), k_GEOIP_CORPORATE_SPEED);
 
+            HHVM_FE(geoip_asnum_by_name);
             HHVM_FE(geoip_continent_code_by_name);
             HHVM_FE(geoip_country_code_by_name);
             HHVM_FE(geoip_country_code3_by_name);
@@ -495,13 +582,20 @@ class geoipExtension: public Extension {
             HHVM_FE(geoip_db_avail);
             HHVM_FE(geoip_db_filename);
             HHVM_FE(geoip_db_get_all_info);
+            HHVM_FE(geoip_domain_by_name);
             HHVM_FE(geoip_id_by_name);
             HHVM_FE(geoip_isp_by_name);
+#if LIBGEOIP_VERSION >= 1004008
+            HHVM_FE(geoip_netspeedcell_by_name);
+#endif
             HHVM_FE(geoip_org_by_name);
             HHVM_FE(geoip_record_by_name);
             HHVM_FE(geoip_region_by_name);
+#if LIBGEOIP_VERSION >= 1004001
             HHVM_FE(geoip_region_name_by_code);
+            HHVM_FE(geoip_setup_custom_directory);
             HHVM_FE(geoip_time_zone_by_country_and_region);
+#endif
 
             loadSystemlib();
 
@@ -519,7 +613,7 @@ class geoipExtension: public Extension {
 #if LIBGEOIP_VERSION >= 1004001
     private:
         static bool updateCustomDirectory(const std::string& value) {
-            s_geoip_globals->custom_directory = value.data();;
+            s_geoip_globals->custom_directory = value.data();
             char *custom_directory = (char *) s_geoip_globals->custom_directory.c_str();
 
             GeoIP_cleanup();

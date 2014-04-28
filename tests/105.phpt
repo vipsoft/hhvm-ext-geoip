@@ -21,15 +21,8 @@ var_dump(geoip_isp_by_name('12.87.118.0'));
 
 ?>
 --EXPECTF--
-Notice: geoip_isp_by_name(): Host  not found in %s
 bool(false)
-
-Notice: geoip_isp_by_name(): Host  not found in %s
 bool(false)
-
-Notice: geoip_isp_by_name(): Host %s not found in %s
 bool(false)
-
-Notice: geoip_isp_by_name(): Host %s not found in %s
 bool(false)
 string(13) "AT&T Services"

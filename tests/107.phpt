@@ -16,16 +16,9 @@ var_dump(geoip_record_by_name('www.utoronto.ca'));
 
 ?>
 --EXPECTF--
-Notice: geoip_record_by_name(): Host  not found in %s
 bool(false)
-
-Notice: geoip_record_by_name(): Host  not found in %s
 bool(false)
-
-Notice: geoip_record_by_name(): Host %s not found in %s
 bool(false)
-
-Notice: geoip_record_by_name(): Host %s not found in %s
 bool(false)
 array(11) {
   ["continent_code"]=>

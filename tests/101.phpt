@@ -16,16 +16,9 @@ var_dump(geoip_continent_code_by_name('www.utoronto.ca'));
 
 ?>
 --EXPECTF--
-Notice: geoip_continent_code_by_name(): Host  not found in %s
 bool(false)
-
-Notice: geoip_continent_code_by_name(): Host  not found in %s
 bool(false)
-
-Notice: geoip_continent_code_by_name(): Host %s not found in %s
 bool(false)
-
-Notice: geoip_continent_code_by_name(): Host %s not found in %s
 bool(false)
 string(2) "NA"
 string(2) "NA"
