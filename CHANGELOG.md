@@ -9,6 +9,7 @@
   - Remove notice for "Host %s not found"
   - Add geoip_asnum_by_name(), geoip_domain_by_name(), geoip_setup_custom_directory()
 * Fix [Add support for ASNum, Domain and NetSpeedCell databases.](https://bugs.php.net/bug.php?id=67121)
+* Fix [Segfault with geoip extension and GeoIP API 1.5](https://bugs.php.net/bug.php?id=64692)
 
 ## Version 1.0.8
 

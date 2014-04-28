@@ -236,7 +236,10 @@ static Array HHVM_FUNCTION(geoip_db_get_all_info) {
             Array row = Array::Create();
 
             row.add(String("available"), Variant((bool) GeoIP_db_avail(i)));
-            row.add(String("description"), Variant(String(GeoIPDBDescription[i])));
+
+            if (GeoIPDBDescription[i]) {
+                row.add(String("description"), Variant(String(GeoIPDBDescription[i])));
+            }
 
             if (GeoIPDBFileName[i]) {
                 row.add(String("filename"), Variant(String(GeoIPDBFileName[i])));
