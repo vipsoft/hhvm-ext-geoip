@@ -3,6 +3,8 @@
 ## Version 1.1.1-dev
 
 * Update for compatibility with geoip-api-c v1.6.0
+  - [tests/013.phpt fails with newer tzdata](https://bugs.php.net/bug.php?id=67230)
+  - [geoip_record_by_name and geoip_region_by_name may segfault with libGeoIP 1.5.0+](https://bugs.php.net/bug.php?id=67231)
 
 ## Version 1.1.0
 
