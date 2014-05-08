@@ -552,7 +552,7 @@ IMPLEMENT_THREAD_LOCAL(geoipGlobals, s_geoip_globals);
 
 class geoipExtension: public Extension {
     public:
-        geoipExtension(): Extension("geoip", "1.1.0") {}
+        geoipExtension(): Extension("geoip", "1.1.1-dev") {}
 
         virtual void threadInit() override {
             IniSetting::Bind(

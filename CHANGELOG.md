@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.1.1-dev
+
+* Update for compatibility with geoip-api-c v1.6.0
+
 ## Version 1.1.0
 
 * Increase test coverage and test data
