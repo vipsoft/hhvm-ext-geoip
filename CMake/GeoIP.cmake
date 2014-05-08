@@ -60,27 +60,27 @@ if(${LIBGEOIP_VERSION} EQUAL 0)
         set(LIBGEOIP_VERSION 1004005)
     endif()
 
-    CHECK_FUNCTION_EXISTS("GeoIP_lib_version" GEOIP_HAS_LIB_VERSION)
+    CHECK_FUNCTION_EXISTS("GeoIP_addr_to_num" GEOIP_HAS_ADDR_TO_NUM)
 
-    if(${GEOIP_HAS_LIB_VERSION})
+    if(${GEOIP_HAS_ADDR_TO_NUM})
         set(LIBGEOIP_VERSION 1004007)
     endif()
 
     CHECK_C_SOURCE_COMPILES("#include <GeoIP.h>
         int main() {
-            int i = GEOIP_NETSPEED_EDITION_REV1_V6;
-        }" GEOIP_HAS_NETSPEED_V6)
+            int i = GEOIP_NETSPEED_EDITION_REV1;
+        }" GEOIP_HAS_NETSPEED_EDITION_REV1)
 
-    if(${GEOIP_HAS_NETSPEED_V6})
+    if(${GEOIP_HAS_NETSPEED_EDITION_REV1})
         set(LIBGEOIP_VERSION 1004008)
     endif()
 
     CHECK_C_SOURCE_COMPILES("#include <GeoIP.h>
         int main() {
-            const char *path = GeoIP_custom_directory;
-        }" GEOIP_HAS_CUSTOM_DIRECTORY)
+            int i = GEOIP_ACCURACYRADIUS_EDITION;
+        }" GEOIP_HAS_ACCURACYRADIUS_EDITION)
 
-    if(${GEOIP_HAS_CUSTOM_DIRECTORY})
+    if(${GEOIP_HAS_ACCURACYRADIUS_EDITION})
         set(LIBGEOIP_VERSION 1005000)
     endif()
 endif()

@@ -1,9 +1,9 @@
 # Changelog
 
-## Version 1.10.0-dev
+## Version 1.1.0
 
 * Increase test coverage and test data
-* Sync with 1.10.0-dev of pecl extension
+* Sync with 1.1.0 of pecl extension
   - Remove notice for "Host %s not found"
   - Add geoip_asnum_by_name(), geoip_domain_by_name(), geoip_setup_custom_directory()
   - [Add support for ASNum, Domain and NetSpeedCell databases.](https://bugs.php.net/bug.php?id=67121)

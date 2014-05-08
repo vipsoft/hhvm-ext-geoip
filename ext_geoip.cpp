@@ -486,7 +486,6 @@ static Variant HHVM_FUNCTION(geoip_region_name_by_code, const String& country_co
 
 #if LIBGEOIP_VERSION >= 1004001
 static Variant HHVM_FUNCTION(geoip_setup_custom_directory, const String& directory) {
-    // UNTESTED
     char *custom_directory = (char *) directory.c_str();
 
 #if LIBGEOIP_VERSION >= 1004007
