@@ -385,10 +385,10 @@ static Variant HHVM_FUNCTION(geoip_record_by_name, const String& hostname) {
     GeoIP *gi;
     GeoIPRecord *gi_record;
 
-    if (GeoIP_db_avail(GEOIP_CITY_EDITION_REV1) || GeoIP_db_avail(GEOIP_CITY_EDITION_REV0)) {
-        if (GeoIP_db_avail(GEOIP_CITY_EDITION_REV1)) {
-            gi = GeoIP_open_type(GEOIP_CITY_EDITION_REV1, GEOIP_STANDARD);
-        } else {
+    if (GeoIP_db_avail(GEOIP_CITY_EDITION_REV0) || GeoIP_db_avail(GEOIP_CITY_EDITION_REV1)) {
+        gi = GeoIP_open_type(GEOIP_CITY_EDITION_REV1, GEOIP_STANDARD);
+
+        if (NULL == gi) {
             gi = GeoIP_open_type(GEOIP_CITY_EDITION_REV0, GEOIP_STANDARD);
         }
     } else {
@@ -435,9 +435,9 @@ static Variant HHVM_FUNCTION(geoip_region_by_name, const String& hostname) {
     GeoIPRegion *gi_region;
 
     if (GeoIP_db_avail(GEOIP_REGION_EDITION_REV0) || GeoIP_db_avail(GEOIP_REGION_EDITION_REV1)) {
-        if (GeoIP_db_avail(GEOIP_REGION_EDITION_REV1)) {
-            gi = GeoIP_open_type(GEOIP_REGION_EDITION_REV1, GEOIP_STANDARD);
-        } else {
+        gi = GeoIP_open_type(GEOIP_REGION_EDITION_REV1, GEOIP_STANDARD);
+
+        if (NULL == gi) {
             gi = GeoIP_open_type(GEOIP_REGION_EDITION_REV0, GEOIP_STANDARD);
         }
     } else {
@@ -552,7 +552,7 @@ IMPLEMENT_THREAD_LOCAL(geoipGlobals, s_geoip_globals);
 
 class geoipExtension: public Extension {
     public:
-        geoipExtension(): Extension("geoip", "1.0.8") {}
+        geoipExtension(): Extension("geoip", "1.1.0") {}
 
         virtual void threadInit() override {
             IniSetting::Bind(
