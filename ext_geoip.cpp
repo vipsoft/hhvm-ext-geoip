@@ -505,7 +505,7 @@ static Variant HHVM_FUNCTION(geoip_setup_custom_directory, const String& directo
     }
 #endif
     GeoIP_setup_custom_directory(*custom_directory ? custom_directory : NULL);
-    _GeoIP_setup_dbfilename();
+    GeoIP_db_avail(GEOIP_COUNTRY_EDITION);
 
     return null_variant;
 }
@@ -624,7 +624,7 @@ class geoipExtension: public Extension {
             }
 #endif
 
-            _GeoIP_setup_dbfilename();
+            GeoIP_db_avail(GEOIP_COUNTRY_EDITION);
         }
 
 #if LIBGEOIP_VERSION >= 1004001
@@ -650,7 +650,7 @@ class geoipExtension: public Extension {
             }
 #endif
             GeoIP_setup_custom_directory(*custom_directory ? custom_directory : NULL);
-            _GeoIP_setup_dbfilename();
+            GeoIP_db_avail(GEOIP_COUNTRY_EDITION);
 
             return true;
         }
