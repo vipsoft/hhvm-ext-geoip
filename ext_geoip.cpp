@@ -74,11 +74,17 @@ static Variant HHVM_FUNCTION(geoip_asnum_by_name, const String& hostname) {
         return null_variant;
     }
 
+    if (NULL == gi) {
+        raise_warning("geoip_asnum_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_ASNUM_EDITION]);
+
+        return null_variant;
+    }
+
     asnum = GeoIP_name_by_name(gi, hostname.c_str());
 
     GeoIP_delete(gi);
 
-    if (asnum == NULL) {
+    if (NULL == asnum) {
         return Variant(false);
     }
 
@@ -97,6 +103,12 @@ static Variant HHVM_FUNCTION(geoip_continent_code_by_name, const String& hostnam
         gi = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
     } else {
         raise_warning("geoip_continent_code_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+    }
+
+    if (NULL == gi) {
+        raise_warning("geoip_continent_code_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+
+        return null_variant;
     }
 
     id = GeoIP_id_by_name(gi, hostname.c_str());
@@ -119,10 +131,16 @@ static Variant HHVM_FUNCTION(geoip_country_code_by_name, const String& hostname)
         raise_warning("geoip_country_code_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
     }
 
+    if (NULL == gi) {
+        raise_warning("geoip_country_code_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+
+        return null_variant;
+    }
+
     country_code = GeoIP_country_code_by_name(gi, hostname.c_str());
     GeoIP_delete(gi);
 
-    if (country_code == NULL) {
+    if (NULL == country_code) {
         return Variant(false);
     }
 
@@ -139,10 +157,16 @@ static Variant HHVM_FUNCTION(geoip_country_code3_by_name, const String& hostname
         raise_warning("geoip_country_code3_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
     }
 
+    if (NULL == gi) {
+        raise_warning("geoip_country_code3_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+
+        return null_variant;
+    }
+
     country_code3 = GeoIP_country_code3_by_name(gi, hostname.c_str());
     GeoIP_delete(gi);
 
-    if (country_code3 == NULL) {
+    if (NULL == country_code3) {
         return Variant(false);
     }
 
@@ -159,10 +183,16 @@ static Variant HHVM_FUNCTION(geoip_country_name_by_name, const String& hostname)
         raise_warning("geoip_country_name_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
     }
 
+    if (NULL == gi) {
+        raise_warning("geoip_country_name_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+
+        return null_variant;
+    }
+
     country_name = GeoIP_country_name_by_name(gi, hostname.c_str());
     GeoIP_delete(gi);
 
-    if (country_name == NULL) {
+    if (NULL == country_name) {
         return Variant(false);
     }
 
@@ -190,6 +220,13 @@ static Variant HHVM_FUNCTION(geoip_database_info, int64_t database /* = GEOIP_CO
     }
 
     gi = GeoIP_open_type(database, GEOIP_STANDARD);
+
+    if (NULL == gi) {
+        raise_warning("geoip_database_info(): Unable to open database %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+
+        return null_variant;
+    }
+
     db_info = GeoIP_database_info(gi);
     GeoIP_delete(gi);
 
@@ -221,7 +258,7 @@ static Variant HHVM_FUNCTION(geoip_db_filename, int64_t database) {
 
     filename = GeoIPDBFileName[database];
 
-    if (filename == NULL) {
+    if (NULL == filename) {
         return null_variant;
     }
 
@@ -264,11 +301,17 @@ static Variant HHVM_FUNCTION(geoip_domain_by_name, const String& hostname) {
         return null_variant;
     }
 
+    if (NULL == gi) {
+        raise_warning("geoip_domain_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_DOMAIN_EDITION]);
+
+        return null_variant;
+    }
+
     domain = GeoIP_name_by_name(gi, hostname.c_str());
 
     GeoIP_delete(gi);
 
-    if (domain == NULL) {
+    if (NULL == domain) {
         return Variant(false);
     }
 
@@ -287,6 +330,12 @@ static Variant HHVM_FUNCTION(geoip_id_by_name, const String& hostname) {
         gi = GeoIP_open_type(GEOIP_NETSPEED_EDITION, GEOIP_STANDARD);
     } else {
         raise_warning("geoip_id_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_NETSPEED_EDITION]);
+
+        return null_variant;
+    }
+
+    if (NULL == gi) {
+        raise_warning("geoip_id_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_NETSPEED_EDITION]);
 
         return null_variant;
     }
@@ -310,11 +359,17 @@ static Variant HHVM_FUNCTION(geoip_isp_by_name, const String& hostname) {
         return null_variant;
     }
 
+    if (NULL == gi) {
+        raise_warning("geoip_isp_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_ISP_EDITION]);
+
+        return null_variant;
+    }
+
     isp = GeoIP_name_by_name(gi, hostname.c_str());
 
     GeoIP_delete(gi);
 
-    if (isp == NULL) {
+    if (NULL == isp) {
         return Variant(false);
     }
 
@@ -338,11 +393,17 @@ static Variant HHVM_FUNCTION(geoip_netspeedcell_by_name, const String& hostname)
         return null_variant;
     }
 
+    if (NULL == gi) {
+        raise_warning("geoip_netspeedcell_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1]);
+
+        return null_variant;
+    }
+
     netspeedcell = GeoIP_name_by_name(gi, hostname.c_str());
 
     GeoIP_delete(gi);
 
-    if (netspeedcell == NULL) {
+    if (NULL == netspeedcell) {
         return Variant(false);
     }
 
@@ -366,11 +427,17 @@ static Variant HHVM_FUNCTION(geoip_org_by_name, const String& hostname) {
         return null_variant;
     }
 
+    if (NULL == gi) {
+        raise_warning("geoip_org_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_ORG_EDITION]);
+
+        return null_variant;
+    }
+
     org = GeoIP_name_by_name(gi, hostname.c_str());
 
     GeoIP_delete(gi);
 
-    if (org == NULL) {
+    if (NULL == org) {
         return Variant(false);
     }
 
@@ -397,6 +464,12 @@ static Variant HHVM_FUNCTION(geoip_record_by_name, const String& hostname) {
         return null_variant;
     }
 
+    if (NULL == gi) {
+        raise_warning("geoip_record_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_CITY_EDITION_REV0]);
+
+        return null_variant;
+    }
+
     gi_record = GeoIP_record_by_name(gi, hostname.c_str());
 
     GeoIP_delete(gi);
@@ -408,14 +481,14 @@ static Variant HHVM_FUNCTION(geoip_record_by_name, const String& hostname) {
     Array record = Array::Create();
 
 #if LIBGEOIP_VERSION >= 1004003
-    record.add(String("continent_code"), Variant(String((gi_record->continent_code == NULL) ? "" : gi_record->continent_code)));
+    record.add(String("continent_code"), Variant(String((NULL == gi_record->continent_code) ? "" : gi_record->continent_code)));
 #endif
-    record.add(String("country_code"), Variant(String((gi_record->country_code == NULL) ? "" : gi_record->country_code)));
-    record.add(String("country_code3"), Variant(String((gi_record->country_code3 == NULL) ? "" : gi_record->country_code3)));
-    record.add(String("country_name"), Variant(String((gi_record->country_name == NULL) ? "" : gi_record->country_name)));
-    record.add(String("region"), Variant(String((gi_record->region == NULL) ? "" : gi_record->region)));
-    record.add(String("city"), Variant(String((gi_record->city == NULL) ? "" : gi_record->city)));
-    record.add(String("postal_code"), Variant(String((gi_record->postal_code == NULL) ? "" : gi_record->postal_code)));
+    record.add(String("country_code"), Variant(String((NULL == gi_record->country_code) ? "" : gi_record->country_code)));
+    record.add(String("country_code3"), Variant(String((NULL == gi_record->country_code3) ? "" : gi_record->country_code3)));
+    record.add(String("country_name"), Variant(String((NULL == gi_record->country_name) ? "" : gi_record->country_name)));
+    record.add(String("region"), Variant(String((NULL == gi_record->region) ? "" : gi_record->region)));
+    record.add(String("city"), Variant(String((NULL == gi_record->city) ? "" : gi_record->city)));
+    record.add(String("postal_code"), Variant(String((NULL == gi_record->postal_code) ? "" : gi_record->postal_code)));
     record.add(String("latitude"), Variant((double) gi_record->latitude));
     record.add(String("longitude"), Variant((double) gi_record->longitude));
 #if LIBGEOIP_VERSION >= 1004005
@@ -446,6 +519,12 @@ static Variant HHVM_FUNCTION(geoip_region_by_name, const String& hostname) {
         return null_variant;
     }
 
+    if (NULL == gi) {
+        raise_warning("geoip_region_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_REGION_EDITION_REV0]);
+
+        return null_variant;
+    }
+
     gi_region = GeoIP_region_by_name(gi, hostname.c_str());
 
     GeoIP_delete(gi);
@@ -456,8 +535,8 @@ static Variant HHVM_FUNCTION(geoip_region_by_name, const String& hostname) {
 
     Array region = Array::Create();
 
-    region.add(String("country_code"), Variant(String(gi_region->country_code)));
-    region.add(String("region"), Variant(String(gi_region->region)));
+    region.add(String("country_code"), Variant(String((NULL == gi_region->country_code) ? "" : gi_region->country_code)));
+    region.add(String("region"), Variant(String((NULL == gi_region->region) ? "" : gi_region->region)));
 
     GeoIPRegion_delete(gi_region);
 
@@ -476,7 +555,7 @@ static Variant HHVM_FUNCTION(geoip_region_name_by_code, const String& country_co
 
     region_name = GeoIP_region_name_by_code(country_code.c_str(), region_code.c_str());
 
-    if (region_name == NULL) {
+    if (NULL == region_name) {
         return Variant(false);
     }
 
@@ -534,7 +613,7 @@ static Variant HHVM_FUNCTION(geoip_time_zone_by_country_and_region, const String
 
     timezone = GeoIP_time_zone_by_country_and_region(country_code.c_str(), region);
 
-    if (timezone == NULL) {
+    if (NULL == timezone) {
         return Variant(false);
     }
 
