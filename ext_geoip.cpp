@@ -66,16 +66,24 @@ static Variant HHVM_FUNCTION(geoip_asnum_by_name, const String& hostname) {
     GeoIP *gi;
     char *asnum;
 
-    if (GeoIP_db_avail(GEOIP_ASNUM_EDITION)) {
-        gi = GeoIP_open_type(GEOIP_ASNUM_EDITION, GEOIP_STANDARD);
-    } else {
-        raise_warning("geoip_asnum_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_ASNUM_EDITION]);
+    if ( ! GeoIP_db_avail(GEOIP_ASNUM_EDITION)) {
+        if (NULL != GeoIPDBFileName[GEOIP_ASNUM_EDITION]) {
+            raise_warning("geoip_asnum_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_ASNUM_EDITION]);
+        } else {
+            raise_warning("geoip_asnum_by_name(): Required database not available.");
+        }
 
         return null_variant;
     }
 
+    gi = GeoIP_open_type(GEOIP_ASNUM_EDITION, GEOIP_STANDARD);
+
     if (NULL == gi) {
-        raise_warning("geoip_asnum_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_ASNUM_EDITION]);
+        if (NULL != GeoIPDBFileName[GEOIP_ASNUM_EDITION]) {
+            raise_warning("geoip_asnum_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_ASNUM_EDITION]);
+        } else {
+            raise_warning("geoip_asnum_by_name(): Unable to open database.");
+        }
 
         return null_variant;
     }
@@ -99,14 +107,24 @@ static Variant HHVM_FUNCTION(geoip_continent_code_by_name, const String& hostnam
     GeoIP *gi;
     int id;
 
-    if (GeoIP_db_avail(GEOIP_COUNTRY_EDITION)) {
-        gi = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
-    } else {
-        raise_warning("geoip_continent_code_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+    if ( ! GeoIP_db_avail(GEOIP_COUNTRY_EDITION)) {
+        if (NULL != GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) {
+            raise_warning("geoip_continent_code_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+        } else {
+            raise_warning("geoip_continent_code_by_name(): Required database not available.");
+        }
+
+        return null_variant;
     }
 
+    gi = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
+
     if (NULL == gi) {
-        raise_warning("geoip_continent_code_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+        if (NULL != GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) {
+            raise_warning("geoip_continent_code_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+        } else {
+            raise_warning("geoip_continent_code_by_name(): Unable to open database.");
+        }
 
         return null_variant;
     }
@@ -125,14 +143,24 @@ static Variant HHVM_FUNCTION(geoip_country_code_by_name, const String& hostname)
     GeoIP *gi;
     const char *country_code;
 
-    if (GeoIP_db_avail(GEOIP_COUNTRY_EDITION)) {
-        gi = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
-    } else {
-        raise_warning("geoip_country_code_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+    if ( ! GeoIP_db_avail(GEOIP_COUNTRY_EDITION)) {
+        if (NULL != GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) {
+            raise_warning("geoip_country_code_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+        } else {
+            raise_warning("geoip_country_code_by_name(): Required database not available.");
+        }
+
+        return null_variant;
     }
 
+    gi = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
+
     if (NULL == gi) {
-        raise_warning("geoip_country_code_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+        if (NULL != GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) {
+            raise_warning("geoip_country_code_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+        } else {
+            raise_warning("geoip_country_code_by_name(): Unable to open database.");
+        }
 
         return null_variant;
     }
@@ -151,14 +179,24 @@ static Variant HHVM_FUNCTION(geoip_country_code3_by_name, const String& hostname
     GeoIP *gi;
     const char *country_code3;
 
-    if (GeoIP_db_avail(GEOIP_COUNTRY_EDITION)) {
-        gi = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
-    } else {
-        raise_warning("geoip_country_code3_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+    if ( ! GeoIP_db_avail(GEOIP_COUNTRY_EDITION)) {
+        if (NULL != GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) {
+            raise_warning("geoip_country_code3_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+        } else {
+            raise_warning("geoip_country_code3_by_name(): Required database not available.");
+        }
+
+        return null_variant;
     }
 
+    gi = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
+
     if (NULL == gi) {
-        raise_warning("geoip_country_code3_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+        if (NULL != GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) {
+            raise_warning("geoip_country_code3_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+        } else {
+            raise_warning("geoip_country_code3_by_name(): Unable to open database.");
+        }
 
         return null_variant;
     }
@@ -177,14 +215,24 @@ static Variant HHVM_FUNCTION(geoip_country_name_by_name, const String& hostname)
     GeoIP *gi;
     const char *country_name;
 
-    if (GeoIP_db_avail(GEOIP_COUNTRY_EDITION)) {
-        gi = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
-    } else {
-        raise_warning("geoip_country_name_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+    if ( ! GeoIP_db_avail(GEOIP_COUNTRY_EDITION)) {
+        if (NULL != GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) {
+            raise_warning("geoip_country_name_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+        } else {
+            raise_warning("geoip_country_name_by_name(): Required database not available.");
+        }
+
+        return null_variant;
     }
 
+    gi = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
+
     if (NULL == gi) {
-        raise_warning("geoip_country_name_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+        if (NULL != GeoIPDBFileName[GEOIP_COUNTRY_EDITION]) {
+            raise_warning("geoip_country_name_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+        } else {
+            raise_warning("geoip_country_name_by_name(): Unable to open database.");
+        }
 
         return null_variant;
     }
@@ -211,7 +259,7 @@ static Variant HHVM_FUNCTION(geoip_database_info, int64_t database /* = GEOIP_CO
 
     if ( ! GeoIP_db_avail(database)) {
         if (NULL != GeoIPDBFileName[database]) {
-            raise_warning("geoip_database_info(): Required database not available at %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+            raise_warning("geoip_database_info(): Required database not available at %s.", GeoIPDBFileName[database]);
         } else {
             raise_warning("geoip_database_info(): Required database not available.");
         }
@@ -222,7 +270,11 @@ static Variant HHVM_FUNCTION(geoip_database_info, int64_t database /* = GEOIP_CO
     gi = GeoIP_open_type(database, GEOIP_STANDARD);
 
     if (NULL == gi) {
-        raise_warning("geoip_database_info(): Unable to open database %s.", GeoIPDBFileName[GEOIP_COUNTRY_EDITION]);
+        if (NULL != GeoIPDBFileName[database]) {
+            raise_warning("geoip_database_info(): Unable to open database %s.", GeoIPDBFileName[database]);
+        } else {
+            raise_warning("geoip_database_info(): Unable to open database.");
+        }
 
         return null_variant;
     }
@@ -293,16 +345,24 @@ static Variant HHVM_FUNCTION(geoip_domain_by_name, const String& hostname) {
     GeoIP *gi;
     char *domain;
 
-    if (GeoIP_db_avail(GEOIP_DOMAIN_EDITION)) {
-        gi = GeoIP_open_type(GEOIP_DOMAIN_EDITION, GEOIP_STANDARD);
-    } else {
-        raise_warning("geoip_domain_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_DOMAIN_EDITION]);
+    if ( ! GeoIP_db_avail(GEOIP_DOMAIN_EDITION)) {
+        if (NULL != GeoIPDBFileName[GEOIP_DOMAIN_EDITION]) {
+            raise_warning("geoip_domain_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_DOMAIN_EDITION]);
+        } else {
+            raise_warning("geoip_domain_by_name(): Required database not available.");
+        }
 
         return null_variant;
     }
 
+    gi = GeoIP_open_type(GEOIP_DOMAIN_EDITION, GEOIP_STANDARD);
+
     if (NULL == gi) {
-        raise_warning("geoip_domain_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_DOMAIN_EDITION]);
+        if (NULL != GeoIPDBFileName[GEOIP_DOMAIN_EDITION]) {
+            raise_warning("geoip_domain_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_DOMAIN_EDITION]);
+        } else {
+            raise_warning("geoip_domain_by_name(): Unable to open database.");
+        }
 
         return null_variant;
     }
@@ -326,16 +386,24 @@ static Variant HHVM_FUNCTION(geoip_id_by_name, const String& hostname) {
     GeoIP *gi;
     int netspeed;
 
-    if (GeoIP_db_avail(GEOIP_NETSPEED_EDITION)) {
-        gi = GeoIP_open_type(GEOIP_NETSPEED_EDITION, GEOIP_STANDARD);
-    } else {
-        raise_warning("geoip_id_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_NETSPEED_EDITION]);
+    if ( ! GeoIP_db_avail(GEOIP_NETSPEED_EDITION)) {
+        if (NULL != GeoIPDBFileName[GEOIP_NETSPEED_EDITION]) {
+            raise_warning("geoip_id_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_NETSPEED_EDITION]);
+        } else {
+            raise_warning("geoip_id_by_name(): Required database not available.");
+        }
 
         return null_variant;
     }
 
+    gi = GeoIP_open_type(GEOIP_NETSPEED_EDITION, GEOIP_STANDARD);
+
     if (NULL == gi) {
-        raise_warning("geoip_id_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_NETSPEED_EDITION]);
+        if (NULL != GeoIPDBFileName[GEOIP_NETSPEED_EDITION]) {
+            raise_warning("geoip_id_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_NETSPEED_EDITION]);
+        } else {
+            raise_warning("geoip_id_by_name(): Unable to open database.");
+        }
 
         return null_variant;
     }
@@ -351,16 +419,24 @@ static Variant HHVM_FUNCTION(geoip_isp_by_name, const String& hostname) {
     GeoIP *gi;
     char *isp;
 
-    if (GeoIP_db_avail(GEOIP_ISP_EDITION)) {
-        gi = GeoIP_open_type(GEOIP_ISP_EDITION, GEOIP_STANDARD);
-    } else {
-        raise_warning("geoip_isp_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_ISP_EDITION]);
+    if ( ! GeoIP_db_avail(GEOIP_ISP_EDITION)) {
+        if (NULL != GeoIPDBFileName[GEOIP_ISP_EDITION]) {
+            raise_warning("geoip_isp_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_ISP_EDITION]);
+        } else {
+            raise_warning("geoip_isp_by_name(): Required database not available.");
+        }
 
         return null_variant;
     }
 
+    gi = GeoIP_open_type(GEOIP_ISP_EDITION, GEOIP_STANDARD);
+
     if (NULL == gi) {
-        raise_warning("geoip_isp_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_ISP_EDITION]);
+        if (NULL != GeoIPDBFileName[GEOIP_ISP_EDITION]) {
+            raise_warning("geoip_isp_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_ISP_EDITION]);
+        } else {
+            raise_warning("geoip_isp_by_name(): Unable to open database.");
+        }
 
         return null_variant;
     }
@@ -385,16 +461,24 @@ static Variant HHVM_FUNCTION(geoip_netspeedcell_by_name, const String& hostname)
     GeoIP *gi;
     char *netspeedcell;
 
-    if (GeoIP_db_avail(GEOIP_NETSPEED_EDITION_REV1)) {
-        gi = GeoIP_open_type(GEOIP_NETSPEED_EDITION_REV1, GEOIP_STANDARD);
-    } else {
-        raise_warning("geoip_netspeedcell_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1]);
+    if ( ! GeoIP_db_avail(GEOIP_NETSPEED_EDITION_REV1)) {
+        if (NULL != GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1]) {
+            raise_warning("geoip_netspeedcell_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1]);
+        } else {
+            raise_warning("geoip_netspeedcell_by_name(): Required database not available.");
+        }
 
         return null_variant;
     }
 
+    gi = GeoIP_open_type(GEOIP_NETSPEED_EDITION_REV1, GEOIP_STANDARD);
+
     if (NULL == gi) {
-        raise_warning("geoip_netspeedcell_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1]);
+        if (NULL != GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1]) {
+            raise_warning("geoip_netspeedcell_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_NETSPEED_EDITION_REV1]);
+        } else {
+            raise_warning("geoip_netspeedcell_by_name(): Unable to open database.");
+        }
 
         return null_variant;
     }
@@ -419,16 +503,24 @@ static Variant HHVM_FUNCTION(geoip_org_by_name, const String& hostname) {
     GeoIP *gi;
     char *org;
 
-    if (GeoIP_db_avail(GEOIP_ORG_EDITION)) {
-        gi = GeoIP_open_type(GEOIP_ORG_EDITION, GEOIP_STANDARD);
-    } else {
-        raise_warning("geoip_org_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_ORG_EDITION]);
+    if ( ! GeoIP_db_avail(GEOIP_ORG_EDITION)) {
+        if (NULL != GeoIPDBFileName[GEOIP_ORG_EDITION]) {
+            raise_warning("geoip_org_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_ORG_EDITION]);
+        } else {
+            raise_warning("geoip_org_by_name(): Required database not available.");
+        }
 
         return null_variant;
     }
 
+    gi = GeoIP_open_type(GEOIP_ORG_EDITION, GEOIP_STANDARD);
+
     if (NULL == gi) {
-        raise_warning("geoip_org_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_ORG_EDITION]);
+        if (NULL != GeoIPDBFileName[GEOIP_ORG_EDITION]) {
+            raise_warning("geoip_org_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_ORG_EDITION]);
+        } else {
+            raise_warning("geoip_org_by_name(): Unable to open database.");
+        }
 
         return null_variant;
     }
@@ -452,20 +544,28 @@ static Variant HHVM_FUNCTION(geoip_record_by_name, const String& hostname) {
     GeoIP *gi;
     GeoIPRecord *gi_record;
 
-    if (GeoIP_db_avail(GEOIP_CITY_EDITION_REV0) || GeoIP_db_avail(GEOIP_CITY_EDITION_REV1)) {
-        gi = GeoIP_open_type(GEOIP_CITY_EDITION_REV1, GEOIP_STANDARD);
-
-        if (NULL == gi) {
-            gi = GeoIP_open_type(GEOIP_CITY_EDITION_REV0, GEOIP_STANDARD);
+    if ( ! GeoIP_db_avail(GEOIP_CITY_EDITION_REV0) && ! GeoIP_db_avail(GEOIP_CITY_EDITION_REV1)) {
+        if (NULL != GeoIPDBFileName[GEOIP_CITY_EDITION_REV0]) {
+            raise_warning("geoip_record_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_CITY_EDITION_REV0]);
+        } else {
+            raise_warning("geoip_record_by_name(): Required database not available.");
         }
-    } else {
-        raise_warning("geoip_record_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_CITY_EDITION_REV0]);
 
         return null_variant;
     }
 
+    gi = GeoIP_open_type(GEOIP_CITY_EDITION_REV1, GEOIP_STANDARD);
+
     if (NULL == gi) {
-        raise_warning("geoip_record_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_CITY_EDITION_REV0]);
+        gi = GeoIP_open_type(GEOIP_CITY_EDITION_REV0, GEOIP_STANDARD);
+    }
+
+    if (NULL == gi) {
+        if (NULL != GeoIPDBFileName[GEOIP_CITY_EDITION_REV0]) {
+            raise_warning("geoip_record_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_CITY_EDITION_REV0]);
+        } else {
+            raise_warning("geoip_record_by_name(): Unable to open database.");
+        }
 
         return null_variant;
     }
@@ -507,20 +607,28 @@ static Variant HHVM_FUNCTION(geoip_region_by_name, const String& hostname) {
     GeoIP *gi;
     GeoIPRegion *gi_region;
 
-    if (GeoIP_db_avail(GEOIP_REGION_EDITION_REV0) || GeoIP_db_avail(GEOIP_REGION_EDITION_REV1)) {
-        gi = GeoIP_open_type(GEOIP_REGION_EDITION_REV1, GEOIP_STANDARD);
-
-        if (NULL == gi) {
-            gi = GeoIP_open_type(GEOIP_REGION_EDITION_REV0, GEOIP_STANDARD);
+    if ( ! GeoIP_db_avail(GEOIP_REGION_EDITION_REV0) && ! GeoIP_db_avail(GEOIP_REGION_EDITION_REV1)) {
+        if (NULL != GeoIPDBFileName[GEOIP_REGION_EDITION_REV0]) {
+            raise_warning("geoip_region_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_REGION_EDITION_REV0]);
+        } else {
+            raise_warning("geoip_region_by_name(): Required database not available.");
         }
-    } else {
-        raise_warning("geoip_region_by_name(): Required database not available at %s.", GeoIPDBFileName[GEOIP_REGION_EDITION_REV0]);
 
         return null_variant;
     }
 
+    gi = GeoIP_open_type(GEOIP_REGION_EDITION_REV1, GEOIP_STANDARD);
+
     if (NULL == gi) {
-        raise_warning("geoip_region_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_REGION_EDITION_REV0]);
+        gi = GeoIP_open_type(GEOIP_REGION_EDITION_REV0, GEOIP_STANDARD);
+    }
+
+    if (NULL == gi) {
+        if (NULL != GeoIPDBFileName[GEOIP_REGION_EDITION_REV0]) {
+            raise_warning("geoip_region_by_name(): Unable to open database %s.", GeoIPDBFileName[GEOIP_REGION_EDITION_REV0]);
+        } else {
+            raise_warning("geoip_region_by_name(): Unable to open database.");
+        }
 
         return null_variant;
     }
