@@ -22,7 +22,6 @@
 #include <cinttypes>
 #include <GeoIP.h>
 #include <GeoIPCity.h>
-#include "GeoIP_internal.h"
 
 namespace HPHP {
 
