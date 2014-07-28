@@ -61,7 +61,10 @@ const StaticString s_GEOIP_CABLEDSL_SPEED("GEOIP_CABLEDSL_SPEED");
 const int64_t k_GEOIP_CORPORATE_SPEED = GEOIP_CORPORATE_SPEED;
 const StaticString s_GEOIP_CORPORATE_SPEED("GEOIP_CORPORATE_SPEED");
 
+static Mutex filename_mutex;
+
 static Variant HHVM_FUNCTION(geoip_asnum_by_name, const String& hostname) {
+    Lock lock(filename_mutex);
     GeoIP *gi;
     char *asnum;
 
@@ -103,6 +106,7 @@ static Variant HHVM_FUNCTION(geoip_asnum_by_name, const String& hostname) {
 }
 
 static Variant HHVM_FUNCTION(geoip_continent_code_by_name, const String& hostname) {
+    Lock lock(filename_mutex);
     GeoIP *gi;
     int id;
 
@@ -139,6 +143,7 @@ static Variant HHVM_FUNCTION(geoip_continent_code_by_name, const String& hostnam
 }
 
 static Variant HHVM_FUNCTION(geoip_country_code_by_name, const String& hostname) {
+    Lock lock(filename_mutex);
     GeoIP *gi;
     const char *country_code;
 
@@ -175,6 +180,7 @@ static Variant HHVM_FUNCTION(geoip_country_code_by_name, const String& hostname)
 }
 
 static Variant HHVM_FUNCTION(geoip_country_code3_by_name, const String& hostname) {
+    Lock lock(filename_mutex);
     GeoIP *gi;
     const char *country_code3;
 
@@ -211,6 +217,7 @@ static Variant HHVM_FUNCTION(geoip_country_code3_by_name, const String& hostname
 }
 
 static Variant HHVM_FUNCTION(geoip_country_name_by_name, const String& hostname) {
+    Lock lock(filename_mutex);
     GeoIP *gi;
     const char *country_name;
 
@@ -247,6 +254,7 @@ static Variant HHVM_FUNCTION(geoip_country_name_by_name, const String& hostname)
 }
 
 static Variant HHVM_FUNCTION(geoip_database_info, int64_t database /* = GEOIP_COUNTRY_EDITION */) {
+    Lock lock(filename_mutex);
     GeoIP *gi;
     char *db_info;
 
@@ -289,6 +297,8 @@ static Variant HHVM_FUNCTION(geoip_database_info, int64_t database /* = GEOIP_CO
 }
 
 static Variant HHVM_FUNCTION(geoip_db_avail, int64_t database) {
+    Lock lock(filename_mutex);
+
     if (database < 0 || database >= NUM_DB_TYPES) {
         raise_warning("geoip_db_avail(): Database type given is out of bound.");
 
@@ -299,6 +309,7 @@ static Variant HHVM_FUNCTION(geoip_db_avail, int64_t database) {
 }
 
 static Variant HHVM_FUNCTION(geoip_db_filename, int64_t database) {
+    Lock lock(filename_mutex);
     const char *filename;
 
     if (database < 0 || database >= NUM_DB_TYPES) {
@@ -317,6 +328,7 @@ static Variant HHVM_FUNCTION(geoip_db_filename, int64_t database) {
 }
 
 static Array HHVM_FUNCTION(geoip_db_get_all_info) {
+    Lock lock(filename_mutex);
     Array info = Array::Create();
 
     for (int i = 0; i < NUM_DB_TYPES; i++) {
@@ -341,6 +353,7 @@ static Array HHVM_FUNCTION(geoip_db_get_all_info) {
 }
 
 static Variant HHVM_FUNCTION(geoip_domain_by_name, const String& hostname) {
+    Lock lock(filename_mutex);
     GeoIP *gi;
     char *domain;
 
@@ -382,6 +395,7 @@ static Variant HHVM_FUNCTION(geoip_domain_by_name, const String& hostname) {
 }
 
 static Variant HHVM_FUNCTION(geoip_id_by_name, const String& hostname) {
+    Lock lock(filename_mutex);
     GeoIP *gi;
     int netspeed;
 
@@ -415,6 +429,7 @@ static Variant HHVM_FUNCTION(geoip_id_by_name, const String& hostname) {
 }
 
 static Variant HHVM_FUNCTION(geoip_isp_by_name, const String& hostname) {
+    Lock lock(filename_mutex);
     GeoIP *gi;
     char *isp;
 
@@ -457,6 +472,7 @@ static Variant HHVM_FUNCTION(geoip_isp_by_name, const String& hostname) {
 
 #if LIBGEOIP_VERSION >= 1004008
 static Variant HHVM_FUNCTION(geoip_netspeedcell_by_name, const String& hostname) {
+    Lock lock(filename_mutex);
     GeoIP *gi;
     char *netspeedcell;
 
@@ -499,6 +515,7 @@ static Variant HHVM_FUNCTION(geoip_netspeedcell_by_name, const String& hostname)
 #endif
 
 static Variant HHVM_FUNCTION(geoip_org_by_name, const String& hostname) {
+    Lock lock(filename_mutex);
     GeoIP *gi;
     char *org;
 
@@ -540,6 +557,7 @@ static Variant HHVM_FUNCTION(geoip_org_by_name, const String& hostname) {
 }
 
 static Variant HHVM_FUNCTION(geoip_record_by_name, const String& hostname) {
+    Lock lock(filename_mutex);
     GeoIP *gi;
     GeoIPRecord *gi_record;
 
@@ -603,6 +621,7 @@ static Variant HHVM_FUNCTION(geoip_record_by_name, const String& hostname) {
 }
 
 static Variant HHVM_FUNCTION(geoip_region_by_name, const String& hostname) {
+    Lock lock(filename_mutex);
     GeoIP *gi;
     GeoIPRegion *gi_region;
 
@@ -672,6 +691,7 @@ static Variant HHVM_FUNCTION(geoip_region_name_by_code, const String& country_co
 
 #if LIBGEOIP_VERSION >= 1004001
 static Variant HHVM_FUNCTION(geoip_setup_custom_directory, const String& directory) {
+    Lock lock(filename_mutex);
     char *custom_directory = (char *) directory.c_str();
 
 #if LIBGEOIP_VERSION >= 1004007
@@ -809,6 +829,7 @@ class geoipExtension: public Extension {
                 GeoIP_setup_custom_directory(custom_directory);
             }
 #endif
+            Lock lock(filename_mutex);
 
             GeoIP_db_avail(GEOIP_COUNTRY_EDITION);
         }
@@ -818,6 +839,7 @@ class geoipExtension: public Extension {
         static bool updateCustomDirectory(const std::string& value) {
             s_geoip_globals->custom_directory = value.data();
             char *custom_directory = (char *) s_geoip_globals->custom_directory.c_str();
+            Lock lock(filename_mutex);
 
 #if LIBGEOIP_VERSION >= 1004007
             GeoIP_cleanup();
