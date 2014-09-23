@@ -27,7 +27,7 @@ hhvm.dynamic_extension_path = /path/to/hhvm/extensions
 hhvm.dynamic_extensions[geoip] = geoip.so
 ~~~
 
-Where `/path/to/hhvm/extensions` is a folder containing all aphp extensions,
+Where `/path/to/hhvm/extensions` is a folder containing all HHVM extensions,
 and `geoip.so` is in it. This will cause the extension to be loaded when the
 virtual machine starts up.
 
