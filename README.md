@@ -20,8 +20,14 @@ $ ./build.sh
 
 This will produce a `geoip.so` file, the dynamically-loadable extension.
 
-To enable the extension, you need to have the following section in your HHVM
-config file:
+To enable the extension, you need to have the following section in your PHP ini file:
+
+~~~
+hhvm.dynamic_extension_path = /path/to/hhvm/extensions
+hhvm.dynamic_extensions[geoip] = geoip.so
+~~~
+
+Note: To enable the extension on older HHVM versions, you will instead have the following section in your HHVM config file:
 
 ~~~
 DynamicExtensionPath = /path/to/hhvm/extensions
