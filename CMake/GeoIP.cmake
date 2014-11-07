@@ -1,42 +1,31 @@
+INCLUDE(CheckLibraryExists)
 INCLUDE(CheckFunctionExists)
 INCLUDE(CheckCSourceCompiles)
 INCLUDE(CheckCSourceRuns)
 
-# Get full path to the library.
-execute_process(
-    COMMAND ldconfig -p
-    COMMAND awk -- "/libGeoIP[.]/ { print }"
-    COMMAND sed -e "s/.*=> //"
-    COMMAND head -1
-    OUTPUT_VARIABLE GEOIP_LIB_PATH
-)
-
-# Get directory name only.
-execute_process(
-    COMMAND dirname ${GEOIP_LIB_PATH}
-    OUTPUT_VARIABLE GEOIP_LIB_DIRECTORY
-)
-
-# Strip trailing newline.
-string(REPLACE "\n" "" GEOIP_LIB_DIRECTORY ${GEOIP_LIB_DIRECTORY})
-
-# Find library that contains version number in the file name.
-execute_process(
-    COMMAND find ${GEOIP_LIB_DIRECTORY} -name "libGeoIP.*.*.*.*"
-    COMMAND cut -d . -f 2-5
-    COMMAND sort
-    COMMAND tail -1
-    OUTPUT_VARIABLE GEOIP_LIB_SUFFIX
-)
-
-# Extract version from library name, e.g., libGeoIP.so.1.4.8.
-# Theoretically, this should work on MacOSX if it is named libGeoIP.1.4.8.dylib.
-string(REGEX MATCHALL "([0-9]+)" GEOIP_LIB_VERSION ${GEOIP_LIB_SUFFIX})
-
 set(LIBGEOIP_VERSION 0)
-foreach(X ${GEOIP_LIB_VERSION})
-    math(EXPR LIBGEOIP_VERSION "${LIBGEOIP_VERSION} * 1000 + ${X}")
-endforeach()
+
+CHECK_LIBRARY_EXISTS(GeoIP GeoIP_open /usr/lib HAVE_LIBGEOIP)
+
+if(${HAVE_LIBGEOIP})
+    # Find library that contains version number in the file name.
+    execute_process(
+        COMMAND find /usr/lib -name "xlibGeoIP.*.*.*.*"
+        COMMAND cut -d . -f 2-5
+        COMMAND sort
+        COMMAND tail -1
+        OUTPUT_VARIABLE GEOIP_LIB_SUFFIX
+    )
+
+    if(${GEOIP_LIB_SUFFIX})
+        # Extract version from library name, e.g., libGeoIP.so.1.4.8.
+        string(REGEX MATCHALL "([0-9]+)" GEOIP_LIB_VERSION ${GEOIP_LIB_SUFFIX})
+
+        foreach(X ${GEOIP_LIB_VERSION})
+            math(EXPR LIBGEOIP_VERSION "${LIBGEOIP_VERSION} * 1000 + ${X}")
+        endforeach()
+    endif()
+endif()
 
 # Fallback to feature detection
 if(${LIBGEOIP_VERSION} EQUAL 0)
