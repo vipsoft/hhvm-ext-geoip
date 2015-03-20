@@ -15,10 +15,10 @@ On Ubuntu 12.04, you need to install the "libgeoip-dev" and "libgeoip1" packages
 
 Requires HHVM 3.0 or later.
 
-To build this extension without the hhvm source, install the `hhvm` package, then:
+To build this extension without the hhvm source:
 
 ~~~
-$ sudo apt-get install hhvm-dev libgeoip-dev
+$ sudo apt-get install hhvm hhvm-dev libgeoip-dev
 $ sudo chmod +x /usr/bin/hphpize
 $ git clone https://github.com/vipsoft/hhvm-ext-geoip.git
 $ cd hhvm-ext-geoip
