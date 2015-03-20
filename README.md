@@ -15,7 +15,15 @@ On Ubuntu 12.04, you need to install the "libgeoip-dev" and "libgeoip1" packages
 
 Requires HHVM 3.0 or later.
 
-To build this extension without the hhvm source:
+If you have already built hhvm from source, build the `geoip.so` file (the dynamically-loadable extension) using:
+
+~~~
+$ export HPHP_HOME=/path/to/hhvm
+$ cd /path/to/extension
+$ ./build.sh
+~~~
+
+To build this extension without the hhvm source, try:
 
 ~~~
 $ sudo apt-get install hhvm-dev libgeoip-dev
@@ -25,14 +33,6 @@ $ cd hhvm-ext-geoip
 $ hphpize
 $ cmake .
 $ make
-~~~
-
-Build the `geoip.so` file (the dynamically-loadable extension):
-
-~~~
-$ export HPHP_HOME=/path/to/hhvm
-$ cd /path/to/extension
-$ ./build.sh
 ~~~
 
 To enable the extension, you need to have the following section in your PHP ini file:
