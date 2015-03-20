@@ -2,6 +2,9 @@
 
 This is a port of the PECL geoip extension for HipHop Virtual Machine.
 
+Note: you will need to build this extension from source. Due to the
+number of platforms supported by HHVM, I am unable to provide binaries.
+
 ### Prerequisites
 
 This extension requires the `<GeoIP.h>` and `<GeoIPCity.h>` header files and `libGeoIP` library installed.
@@ -12,13 +15,25 @@ On Ubuntu 12.04, you need to install the "libgeoip-dev" and "libgeoip1" packages
 
 Requires HHVM 3.0 or later.
 
+To build this extension without the hhvm source, install the `hhvm` package, then:
+
+~~~
+$ sudo apt-get install hhvm-dev libgeoip-dev
+$ sudo chmod +x /usr/bin/hphpize
+$ git clone https://github.com/vipsoft/hhvm-ext-geoip.git
+$ cd hhvm-ext-geoip
+$ hphpize
+$ cmake .
+$ make
+~~~
+
+Build the `geoip.so` file (the dynamically-loadable extension):
+
 ~~~
 $ export HPHP_HOME=/path/to/hhvm
 $ cd /path/to/extension
 $ ./build.sh
 ~~~
-
-This will produce a `geoip.so` file, the dynamically-loadable extension.
 
 To enable the extension, you need to have the following section in your PHP ini file:
 
