@@ -18,7 +18,8 @@
    +----------------------------------------------------------------------+
 */
 
-#include "hphp/runtime/base/base-includes.h"
+#include "hphp/runtime/ext/extension.h"
+#include "hphp/util/lock.h"
 #include <cinttypes>
 #include <GeoIP.h>
 #include <GeoIPCity.h>
