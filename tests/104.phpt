@@ -12,7 +12,7 @@ var_dump(geoip_country_name_by_name(''));
 var_dump(geoip_country_name_by_name('127.0.0.1'));
 var_dump(geoip_country_name_by_name('localhost'));
 var_dump(geoip_country_name_by_name('128.100.132.238'));
-var_dump(geoip_country_name_by_name('www.utoronto.ca'));
+var_dump(geoip_country_name_by_name('utoronto.ca'));
 
 ?>
 --EXPECTF--
