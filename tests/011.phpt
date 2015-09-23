@@ -9,4 +9,4 @@ geoip_database_info(0);
 
 ?>
 --EXPECTF--
-Warning: geoip_database_info(): Required database not available. in %s on line %d
+Warning: Required database not available. in %s on line %d

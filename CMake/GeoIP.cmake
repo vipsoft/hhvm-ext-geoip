@@ -10,7 +10,7 @@ CHECK_LIBRARY_EXISTS(GeoIP GeoIP_open /usr/lib HAVE_LIBGEOIP)
 if(${HAVE_LIBGEOIP})
     # Find library that contains version number in the file name.
     execute_process(
-        COMMAND find /usr/lib -name "xlibGeoIP.*.*.*.*"
+        COMMAND find /usr/lib -name "libGeoIP.*.*.*.*"
         COMMAND cut -d . -f 2-5
         COMMAND sort
         COMMAND tail -1
