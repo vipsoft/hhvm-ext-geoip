@@ -76,7 +76,7 @@ static Variant HHVM_FUNCTION(geoip_asnum_by_name, const String& hostname) {
             raise_warning("geoip_asnum_by_name(): Required database not available.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi = GeoIP_open_type(GEOIP_ASNUM_EDITION, GEOIP_STANDARD);
@@ -88,7 +88,7 @@ static Variant HHVM_FUNCTION(geoip_asnum_by_name, const String& hostname) {
             raise_warning("geoip_asnum_by_name(): Unable to open database.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     asnum = GeoIP_name_by_name(gi, hostname.c_str());
@@ -118,7 +118,7 @@ static Variant HHVM_FUNCTION(geoip_continent_code_by_name, const String& hostnam
             raise_warning("geoip_continent_code_by_name(): Required database not available.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
@@ -130,7 +130,7 @@ static Variant HHVM_FUNCTION(geoip_continent_code_by_name, const String& hostnam
             raise_warning("geoip_continent_code_by_name(): Unable to open database.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     id = GeoIP_id_by_name(gi, hostname.c_str());
@@ -155,7 +155,7 @@ static Variant HHVM_FUNCTION(geoip_country_code_by_name, const String& hostname)
             raise_warning("geoip_country_code_by_name(): Required database not available.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
@@ -167,7 +167,7 @@ static Variant HHVM_FUNCTION(geoip_country_code_by_name, const String& hostname)
             raise_warning("geoip_country_code_by_name(): Unable to open database.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     country_code = GeoIP_country_code_by_name(gi, hostname.c_str());
@@ -192,7 +192,7 @@ static Variant HHVM_FUNCTION(geoip_country_code3_by_name, const String& hostname
             raise_warning("geoip_country_code3_by_name(): Required database not available.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
@@ -204,7 +204,7 @@ static Variant HHVM_FUNCTION(geoip_country_code3_by_name, const String& hostname
             raise_warning("geoip_country_code3_by_name(): Unable to open database.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     country_code3 = GeoIP_country_code3_by_name(gi, hostname.c_str());
@@ -229,7 +229,7 @@ static Variant HHVM_FUNCTION(geoip_country_name_by_name, const String& hostname)
             raise_warning("geoip_country_name_by_name(): Required database not available.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
@@ -241,7 +241,7 @@ static Variant HHVM_FUNCTION(geoip_country_name_by_name, const String& hostname)
             raise_warning("geoip_country_name_by_name(): Unable to open database.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     country_name = GeoIP_country_name_by_name(gi, hostname.c_str());
@@ -262,7 +262,7 @@ static Variant HHVM_FUNCTION(geoip_database_info, int64_t database /* = GEOIP_CO
     if (database < 0 || database >= NUM_DB_TYPES) {
         raise_warning("geoip_database_info(): Database type given is out of bound.");
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     if ( ! GeoIP_db_avail(database)) {
@@ -272,7 +272,7 @@ static Variant HHVM_FUNCTION(geoip_database_info, int64_t database /* = GEOIP_CO
             raise_warning("geoip_database_info(): Required database not available.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi = GeoIP_open_type(database, GEOIP_STANDARD);
@@ -284,7 +284,7 @@ static Variant HHVM_FUNCTION(geoip_database_info, int64_t database /* = GEOIP_CO
             raise_warning("geoip_database_info(): Unable to open database.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     db_info = GeoIP_database_info(gi);
@@ -303,7 +303,7 @@ static Variant HHVM_FUNCTION(geoip_db_avail, int64_t database) {
     if (database < 0 || database >= NUM_DB_TYPES) {
         raise_warning("geoip_db_avail(): Database type given is out of bound.");
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     return Variant((bool) GeoIP_db_avail(database));
@@ -316,13 +316,13 @@ static Variant HHVM_FUNCTION(geoip_db_filename, int64_t database) {
     if (database < 0 || database >= NUM_DB_TYPES) {
         raise_warning("geoip_db_filename(): Database type given is out of bound.");
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     filename = GeoIPDBFileName[database];
 
     if (NULL == filename) {
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     return Variant(String(filename));
@@ -365,7 +365,7 @@ static Variant HHVM_FUNCTION(geoip_domain_by_name, const String& hostname) {
             raise_warning("geoip_domain_by_name(): Required database not available.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi = GeoIP_open_type(GEOIP_DOMAIN_EDITION, GEOIP_STANDARD);
@@ -377,7 +377,7 @@ static Variant HHVM_FUNCTION(geoip_domain_by_name, const String& hostname) {
             raise_warning("geoip_domain_by_name(): Unable to open database.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     domain = GeoIP_name_by_name(gi, hostname.c_str());
@@ -407,7 +407,7 @@ static Variant HHVM_FUNCTION(geoip_id_by_name, const String& hostname) {
             raise_warning("geoip_id_by_name(): Required database not available.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi = GeoIP_open_type(GEOIP_NETSPEED_EDITION, GEOIP_STANDARD);
@@ -419,7 +419,7 @@ static Variant HHVM_FUNCTION(geoip_id_by_name, const String& hostname) {
             raise_warning("geoip_id_by_name(): Unable to open database.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     netspeed = GeoIP_id_by_name(gi, hostname.c_str());
@@ -441,7 +441,7 @@ static Variant HHVM_FUNCTION(geoip_isp_by_name, const String& hostname) {
             raise_warning("geoip_isp_by_name(): Required database not available.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi = GeoIP_open_type(GEOIP_ISP_EDITION, GEOIP_STANDARD);
@@ -453,7 +453,7 @@ static Variant HHVM_FUNCTION(geoip_isp_by_name, const String& hostname) {
             raise_warning("geoip_isp_by_name(): Unable to open database.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     isp = GeoIP_name_by_name(gi, hostname.c_str());
@@ -484,7 +484,7 @@ static Variant HHVM_FUNCTION(geoip_netspeedcell_by_name, const String& hostname)
             raise_warning("geoip_netspeedcell_by_name(): Required database not available.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi = GeoIP_open_type(GEOIP_NETSPEED_EDITION_REV1, GEOIP_STANDARD);
@@ -496,7 +496,7 @@ static Variant HHVM_FUNCTION(geoip_netspeedcell_by_name, const String& hostname)
             raise_warning("geoip_netspeedcell_by_name(): Unable to open database.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     netspeedcell = GeoIP_name_by_name(gi, hostname.c_str());
@@ -527,7 +527,7 @@ static Variant HHVM_FUNCTION(geoip_org_by_name, const String& hostname) {
             raise_warning("geoip_org_by_name(): Required database not available.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi = GeoIP_open_type(GEOIP_ORG_EDITION, GEOIP_STANDARD);
@@ -539,7 +539,7 @@ static Variant HHVM_FUNCTION(geoip_org_by_name, const String& hostname) {
             raise_warning("geoip_org_by_name(): Unable to open database.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     org = GeoIP_name_by_name(gi, hostname.c_str());
@@ -569,7 +569,7 @@ static Variant HHVM_FUNCTION(geoip_record_by_name, const String& hostname) {
             raise_warning("geoip_record_by_name(): Required database not available.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi = GeoIP_open_type(GEOIP_CITY_EDITION_REV1, GEOIP_STANDARD);
@@ -585,7 +585,7 @@ static Variant HHVM_FUNCTION(geoip_record_by_name, const String& hostname) {
             raise_warning("geoip_record_by_name(): Unable to open database.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi_record = GeoIP_record_by_name(gi, hostname.c_str());
@@ -633,7 +633,7 @@ static Variant HHVM_FUNCTION(geoip_region_by_name, const String& hostname) {
             raise_warning("geoip_region_by_name(): Required database not available.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi = GeoIP_open_type(GEOIP_REGION_EDITION_REV1, GEOIP_STANDARD);
@@ -649,7 +649,7 @@ static Variant HHVM_FUNCTION(geoip_region_by_name, const String& hostname) {
             raise_warning("geoip_region_by_name(): Unable to open database.");
         }
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     gi_region = GeoIP_region_by_name(gi, hostname.c_str());
@@ -714,7 +714,7 @@ static Variant HHVM_FUNCTION(geoip_setup_custom_directory, const String& directo
     GeoIP_setup_custom_directory(*custom_directory ? custom_directory : NULL);
     GeoIP_db_avail(GEOIP_COUNTRY_EDITION);
 
-    return null_variant;
+    return Variant(Variant::NullInit{});
 }
 #endif
 
@@ -736,7 +736,7 @@ static Variant HHVM_FUNCTION(geoip_time_zone_by_country_and_region, const String
     } else {
         raise_param_type_warning("geoip_time_zone_by_country_and_region", 2, KindOfString, region_code.getType());
 
-        return null_variant;
+        return Variant(Variant::NullInit{});
     }
 
     timezone = GeoIP_time_zone_by_country_and_region(country_code.c_str(), region);
