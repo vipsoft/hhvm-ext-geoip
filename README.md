@@ -26,7 +26,7 @@ $ ./build.sh
 To build this extension without the hhvm source, try:
 
 ~~~
-$ sudo apt-get install hhvm-dev libgeoip-dev
+$ sudo apt-get install hhvm-dev libgeoip-dev libboost-all-dev libdouble-conversion-dev libgoogle-glog-dev libtbb-dev
 $ sudo chmod +x /usr/bin/hphpize
 $ git clone https://github.com/vipsoft/hhvm-ext-geoip.git
 $ cd hhvm-ext-geoip
