@@ -26,6 +26,13 @@
 
 namespace HPHP {
 
+// HPHP::Array::add() was removed in HHVM 3.29, should use set() instead
+#if defined HHVM_VERSION_BRANCH && HHVM_VERSION_BRANCH >= 0x031D00
+    #define ARRAY_ADD(arr,key,value) arr.set(String(key), Variant(value))
+#else
+    #define ARRAY_ADD(arr,key,value) arr.add(String(key), Variant(value))
+#endif
+
 // Database types recognized by geoip_database_info() geoip_db_avail(), and geoip_db_filename()
 const int64_t k_GEOIP_COUNTRY_EDITION = GEOIP_COUNTRY_EDITION;
 const StaticString s_GEOIP_COUNTRY_EDITION("GEOIP_COUNTRY_EDITION");
@@ -336,14 +343,14 @@ static Array HHVM_FUNCTION(geoip_db_get_all_info) {
         if (NULL != GeoIPDBDescription[i]) {
             Array row = Array::Create();
 
-            row.add(String("available"), Variant((bool) GeoIP_db_avail(i)));
+            ARRAY_ADD(row, "available", (bool) GeoIP_db_avail(i));
 
             if (GeoIPDBDescription[i]) {
-                row.add(String("description"), Variant(String(GeoIPDBDescription[i])));
+                ARRAY_ADD(row, "description", String(GeoIPDBDescription[i]));
             }
 
             if (GeoIPDBFileName[i]) {
-                row.add(String("filename"), Variant(String(GeoIPDBFileName[i])));
+                ARRAY_ADD(row, "filename", String(GeoIPDBFileName[i]));
             }
 
             info.set(i, Variant(row));
@@ -599,22 +606,22 @@ static Variant HHVM_FUNCTION(geoip_record_by_name, const String& hostname) {
     Array record = Array::Create();
 
 #if LIBGEOIP_VERSION >= 1004003
-    record.add(String("continent_code"), Variant(String((NULL == gi_record->continent_code) ? "" : gi_record->continent_code)));
+    ARRAY_ADD(record, "continent_code", String((NULL == gi_record->continent_code) ? "" : gi_record->continent_code));
 #endif
-    record.add(String("country_code"), Variant(String((NULL == gi_record->country_code) ? "" : gi_record->country_code)));
-    record.add(String("country_code3"), Variant(String((NULL == gi_record->country_code3) ? "" : gi_record->country_code3)));
-    record.add(String("country_name"), Variant(String((NULL == gi_record->country_name) ? "" : gi_record->country_name)));
-    record.add(String("region"), Variant(String((NULL == gi_record->region) ? "" : gi_record->region)));
-    record.add(String("city"), Variant(String((NULL == gi_record->city) ? "" : gi_record->city)));
-    record.add(String("postal_code"), Variant(String((NULL == gi_record->postal_code) ? "" : gi_record->postal_code)));
-    record.add(String("latitude"), Variant((double) gi_record->latitude));
-    record.add(String("longitude"), Variant((double) gi_record->longitude));
+    ARRAY_ADD(record, "country_code", String((NULL == gi_record->country_code) ? "" : gi_record->country_code));
+    ARRAY_ADD(record, "country_code3", String((NULL == gi_record->country_code3) ? "" : gi_record->country_code3));
+    ARRAY_ADD(record, "country_name", String((NULL == gi_record->country_name) ? "" : gi_record->country_name));
+    ARRAY_ADD(record, "region", String((NULL == gi_record->region) ? "" : gi_record->region));
+    ARRAY_ADD(record, "city", String((NULL == gi_record->city) ? "" : gi_record->city));
+    ARRAY_ADD(record, "postal_code", String((NULL == gi_record->postal_code) ? "" : gi_record->postal_code));
+    ARRAY_ADD(record, "latitude", (double) gi_record->latitude);
+    ARRAY_ADD(record, "longitude", (double) gi_record->longitude);
 #if LIBGEOIP_VERSION >= 1004005
-    record.add(String("dma_code"), Variant((int64_t) gi_record->metro_code));
+    ARRAY_ADD(record, "dma_code", (int64_t) gi_record->metro_code);
 #else
-    record.add(String("dma_code"), Variant((int64_t) gi_record->dma_code));
+    ARRAY_ADD(record, "dma_code", (int64_t) gi_record->dma_code);
 #endif
-    record.add(String("area_code"), Variant((int64_t) gi_record->area_code));
+    ARRAY_ADD(record, "area_code", (int64_t) gi_record->area_code);
 
     GeoIPRecord_delete(gi_record);
 
@@ -662,8 +669,8 @@ static Variant HHVM_FUNCTION(geoip_region_by_name, const String& hostname) {
 
     Array region = Array::Create();
 
-    region.add(String("country_code"), Variant(String((NULL == gi_region->country_code) ? "" : gi_region->country_code)));
-    region.add(String("region"), Variant(String((NULL == gi_region->region) ? "" : gi_region->region)));
+    ARRAY_ADD(region, "country_code", String((NULL == gi_region->country_code) ? "" : gi_region->country_code));
+    ARRAY_ADD(region, "region", String((NULL == gi_region->region) ? "" : gi_region->region));
 
     GeoIPRegion_delete(gi_region);
 
@@ -755,7 +762,11 @@ struct geoipGlobals {
     std::string custom_directory;
 };
 
-IMPLEMENT_THREAD_LOCAL(geoipGlobals, s_geoip_globals);
+#ifdef IMPLEMENT_THREAD_LOCAL
+  IMPLEMENT_THREAD_LOCAL(geoipGlobals, s_geoip_globals);
+#else
+  THREAD_LOCAL(geoipGlobals, s_geoip_globals);
+#endif
 
 class geoipExtension: public Extension {
     public:
